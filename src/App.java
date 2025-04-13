@@ -1,8 +1,8 @@
 import javax.swing.*;
-import exemples.Calculator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import exemples.Calculator;
 
 public class App {
     public static void main(String[] args) {

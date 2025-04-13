@@ -13,27 +13,53 @@ public class Calculator {
 
     // Operation details storage
     public enum Operation {
-        simple_average("simple_average", new String[] { "value1", "value2" }),
-        weighted_average("weighted_average", new String[] { "value1", "value2", "weight1", "weight2" }),
-        full_salary("full_salary", new String[] { "salary", "salesTotal" }),
-        average_speed("average_speed", new String[] { "distVariation", "timeVariation" }),
-        time_variation("time_variation", new String[] { "distVariation", "averageVelocity" }),
-        distance_variation("distance_variation", new String[] { "averageVelocity", "timeVariation" });
+        simple_average("simple_average", "Média Aritmética Simples",
+                new String[] { "value1", "value2" },
+                new String[] { "Valor 1", "Valor 2" }),
+        weighted_average("weighted_average", "Média Aritmética Ponderada",
+                new String[] { "value1", "value2", "weight1", "weight2" },
+                new String[] { "Valor 1", "Valor 2", "Peso 1", "Peso 2" }),
+        full_salary("full_salary", "Salário Final",
+                new String[] { "salary", "salesTotal" },
+                new String[] { "Salario", "Total de Vendas" }),
+        average_speed("average_speed", "Velocidade Média",
+                new String[] { "distVariation", "timeVariation" },
+                new String[] { "Variação de Distância", "Variação de Tempo" }),
+        time_variation("time_variation", "Variação de Tempo",
+                new String[] { "distVariation", "averageVelocity" },
+                new String[] { "Variação de Distância", "Velocidade Média" }),
+        distance_variation("distance_variation", "Variação de Distância",
+                new String[] { "averageVelocity", "timeVariation" },
+                new String[] { "Velocidade Média", "Variação de Tempo" });
 
         private final String operation;
+        private final String operationPtbr;
         private final String[] variables;
+        private final String[] variablesNamesPtbr;
 
-        Operation(String operation, String[] variables) {
+        Operation(String operation, String operationPtbr,
+                String[] variables,
+                String[] variablesNamesPtbr) {
             this.operation = operation;
+            this.operationPtbr = operationPtbr;
             this.variables = variables;
+            this.variablesNamesPtbr = variablesNamesPtbr;
         }
 
         public String getOperation() {
             return operation;
         }
 
+        public String getOperationPtbr() {
+            return operationPtbr;
+        }
+
         public String[] getVariables() {
             return variables;
+        }
+
+        public String[] getVariablesNamesPtbr() {
+            return variablesNamesPtbr;
         }
     }
 

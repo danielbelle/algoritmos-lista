@@ -8,12 +8,12 @@ import java.awt.event.ActionListener;
 public class ShowExemple {
 
     public void run(Calculator.Operation selectedOp) {
-        JFrame frame = new JFrame("Resolução de Exemplo: " + selectedOp.getOperation());
+        JFrame frame = new JFrame("Resolução de Exemplo: " + selectedOp.getOperationPtbr());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(400, 300);
         frame.setLayout(new GridLayout(5, 1));
 
-        JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperation(), SwingConstants.CENTER);
+        JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperationPtbr(), SwingConstants.CENTER);
         frame.add(formulaLabel);
 
         JPanel inputPanel = new JPanel(new GridLayout(0, 2));
@@ -21,7 +21,7 @@ public class ShowExemple {
         // Campos de entrada para as variáveis da operação
         JTextField[] inputFields = new JTextField[selectedOp.getVariables().length];
         for (int i = 0; i < selectedOp.getVariables().length; i++) {
-            JLabel label = new JLabel(selectedOp.getVariables()[i] + ":");
+            JLabel label = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ":");
             JTextField textField = new JTextField();
             inputFields[i] = textField;
             inputPanel.add(label);
