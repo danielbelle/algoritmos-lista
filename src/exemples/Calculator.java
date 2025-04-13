@@ -32,7 +32,8 @@ public class Calculator {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String choice = "distance_variation";
+        String choice = "distance_variation"; // simple_average, weighted_average, full_salary, average_speed,
+        // time_variation, distance_variation
 
         try {
             Operation selectedOp = Operation.valueOf(choice);
@@ -62,17 +63,19 @@ public class Calculator {
     private static double calculateFormula(String operation, double[] values) {
 
         if (operation == "weighted_average" || operation == "simple_average") {
-            // used boolean logic that it values[2] != 0 && values[3] != 0 && values[2] &&
-            // values[3] != 0
-            // is values[2]+values[3]!=0
-
-            if (values[2] + values[3] != 0) {
-                return (values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]);
+            if (values.length > 2) {
+                if (values[2] + values[3] != 0) {
+                    return (values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]);
+                } else {
+                    throw new ArithmeticException("Division by zero is not allowed.");
+                }
             } else {
                 return (values[0] + values[1]) / 2;
             }
         } else if (operation == "full_salary") {
             return values[0] + values[1] * (0.15);
+        } else if (operation == "distance_variation") {
+            return (values[0] * values[1]);
         } else {
             if (values[1] != 0) {
                 return (values[0] / values[1]);
