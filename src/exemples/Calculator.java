@@ -1,102 +1,84 @@
 package exemples;
 
+import java.util.Scanner;
+
 public class Calculator {
 
-    // Atributos
-    private static double value1, value2, weight1, weight2;
-    private static String operation = "weighted_average"; // pode ser
+    // Operation details storage
+    private enum Operation {
+        simple_average("simple_average", new String[] { "value1", "value2" }),
+        weighted_average("weighted_average", new String[] { "value1", "value2", "weight1", "weight2" }),
+        full_salary("full_salary", new String[] { "salary", "salesTotal" }),
+        average_speed("average_speed", new String[] { "distVariation", "timeVariation" }),
+        time_variation("time_variation", new String[] { "distVariation", "averageVelocity" }),
+        distance_variation("distance_variation", new String[] { "averageVelocity", "timeVariation" });
+
+        private final String operation;
+        private final String[] variables;
+
+        Operation(String operation, String[] variables) {
+            this.operation = operation;
+            this.variables = variables;
+        }
+
+        public String getOperation() {
+            return operation;
+        }
+
+        public String[] getVariables() {
+            return variables;
+        }
+    }
 
     public static void main(String[] args) {
-        Object[] processArray = getProcess(operation);
-        Double[] inputVariables = getInputVariables(processArray[0]);
-        Double processResult = startProcess(inputVariables, processArray[1]);
-        System.out.println(processResult);
-        /*
-         * for (Object line : processArray) {
-         * System.out.println(line);
-         * }
-         */
-    }
+        Scanner scanner = new Scanner(System.in);
+        String choice = "distance_variation";
 
-    public static Double startProcess(Double[] inputVariables, Object processArray) {
-
-        for (Object line : inputVariables) {
-            // System.out.println(line);
+        try {
+            Operation selectedOp = Operation.valueOf(choice);
+            calculateOperation(selectedOp, scanner);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid operation selected!");
         }
 
-        Double extractFormula = (Double) processArray;
-
-        return extractFormula;
+        scanner.close();
     }
 
-    public static Double[] getInputVariables(Object processArray) {
+    private static void calculateOperation(Operation operation, Scanner scanner) {
+        System.out.printf("\nOperation %s selected: %s%n", operation.name(), operation.getOperation());
 
-        value1 = 10;
-        value2 = 20;
-        weight1 = 2;
-        weight2 = 3;
+        // Get input values for each variable
+        double[] values = new double[operation.getVariables().length];
+        for (int i = 0; i < operation.getVariables().length; i++) {
+            System.out.printf("Enter value for %s: ", operation.getVariables()[i]);
+            values[i] = scanner.nextDouble();
+        }
 
-        return new Double[] {
-                value1,
-                value2,
-                weight1,
-                weight2
-        };
-
+        // Calculate result based on operation
+        double result = calculateFormula(operation.getOperation(), values);
+        System.out.printf("Result: %.2f%n", result);
     }
 
-    public static Object[] getProcess(String operation) {
+    private static double calculateFormula(String operation, double[] values) {
 
-        switch (operation) {
-            case "simple_average":
-                return new Object[] {
-                        "double value1, double value2",
-                        (value1 + value2) / 2
-                };
-            case "weighted_average":
-                return new Object[] {
-                        "double value1, double value2, double weight1, double weight2",
-                        (((value1 * weight1) + (value2 * weight2)) / (weight1 + weight2))
-                };
-            case "/":
-                if (value2 != 0) {
-                    return new Object[] {
-                            "double value1, double value2",
-                            (value1 / value2)
-                    };
-                } else {
-                    throw new ArithmeticException("Division by zero is not allowed.");
-                }
-            default:
-                throw new IllegalArgumentException("Invalid operation: " + operation);
+        if (operation == "weighted_average" || operation == "simple_average") {
+            // used boolean logic that it values[2] != 0 && values[3] != 0 && values[2] &&
+            // values[3] != 0
+            // is values[2]+values[3]!=0
+
+            if (values[2] + values[3] != 0) {
+                return (values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]);
+            } else {
+                return (values[0] + values[1]) / 2;
+            }
+        } else if (operation == "full_salary") {
+            return values[0] + values[1] * (0.15);
+        } else {
+            if (values[1] != 0) {
+                return (values[0] / values[1]);
+            } else {
+                throw new ArithmeticException("Division by zero is not allowed.");
+            }
         }
     }
-
-    /*
-     * 
-     * 
-     * 
-     * 
-     * public static double getProcess(String operation){
-     * 
-     * switch (operation) {
-     * case "simple_average":
-     * return (value1 + value2) / 2;
-     * case "weighted_average":
-     * return ((value1 * weight1) + (value2 * weight2)) / (weight1 + weight2);
-     * case "*":
-     * return value1 * value2;
-     * case "/":
-     * if (value2 != 0) {
-     * return value1 / value2;
-     * } else {
-     * throw new ArithmeticException("Division by zero is not allowed.");
-     * }
-     * 
-     * default:
-     * throw new IllegalArgumentException("Invalid operation: " + operation);
-     * }
-     * 
-     */
-
 }
