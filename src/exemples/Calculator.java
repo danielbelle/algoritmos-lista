@@ -72,7 +72,7 @@ public class Calculator {
 
             // Chama a interface gráfica do ShowExemple
             ShowExemple showExemple = new ShowExemple();
-            showExemple.run(selectedOp);
+            showExemple.run(selectedOp, null);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid operation selected!");

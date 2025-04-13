@@ -21,7 +21,9 @@ public class App {
                 "Exemplo 3 - Salário Final",
                 "Exemplo 4 - Velocidade Média",
                 "Exemplo 5 - Variação de Tempo",
-                "Exemplo 6 - Variação de Distância"
+                "Exemplo 6 - Variação de Distância",
+                "Exemplo 7 - Exemplo do Ônibus"
+
         };
 
         // Create a JList to display exercises

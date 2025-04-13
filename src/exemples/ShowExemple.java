@@ -41,22 +41,34 @@ public class ShowExemple {
         // Configuração do layout horizontal
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addComponent(formulaLabel)
-                        .addComponent(inputPanel)
+                        .addComponent(formulaLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(calculateButton)
                                 .addComponent(clearButton))
-                        .addComponent(resultLabel));
+                        .addComponent(resultLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE));
 
         // Configuração do layout vertical
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                        .addComponent(formulaLabel)
-                        .addComponent(inputPanel)
+                        .addGap(20) // Espaçamento superior
+                        .addComponent(formulaLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)
+                        .addGap(10) // Espaçamento entre o título e o painel de entrada
+                        .addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)
+                        .addGap(10) // Espaçamento entre o painel de entrada e os botões
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(calculateButton)
                                 .addComponent(clearButton))
-                        .addComponent(resultLabel));
+                        .addGap(10) // Espaçamento entre os botões e o rótulo de resultado
+                        .addComponent(resultLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)
+                        .addGap(20) // Espaçamento inferior
+        );
 
         // Ação do botão "Calcular"
         calculateButton.addActionListener(new ActionListener() {
