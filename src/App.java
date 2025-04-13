@@ -1,7 +1,5 @@
 import javax.swing.*;
-
-import exemples.MediaAritmeticaSimples;
-
+import exemples.Calculator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,44 +47,28 @@ public class App {
             public void actionPerformed(ActionEvent e) {
                 String selectedExercise = exerciseList.getSelectedValue();
                 if (selectedExercise != null) {
-                    // JOptionPane.showMessageDialog(frame, "Você selecionou: " + selectedExercise);
-                    // Call the corresponding example class based on the selection
                     switch (selectedExercise) {
                         case "Exemplo 1 - Média Aritmética Simples":
-                            new MediaAritmeticaSimples().run();
+                            Calculator.main(new String[] { "simple_average" });
                             break;
-                        /*
-                         * case "Exemplo 2 - Média Aritmética Ponderada":
-                         * new Exemplo2().run();
-                         * break;
-                         * case "Exemplo 3 - Salário Final":
-                         * new Exemplo3().run();
-                         * break;
-                         * case "Exemplo 4 - Velocidade Média":
-                         * new Exemplo4().run();
-                         * break;
-                         * case "Exemplo 5 - Variação de Tempo":
-                         * new Exemplo5().run();
-                         * break;
-                         * case "Exemplo 6 - Variação de Distância":
-                         * new Exemplo6().run();
-                         * break;
-                         * case "Exemplo 7":
-                         * new Exemplo7().run();
-                         * break;
-                         * case "Exemplo 8":
-                         * new Exemplo8().run();
-                         * break;
-                         * case "Exemplo 9":
-                         * new Exemplo9().run();
-                         * break;
-                         * case "Exemplo 10":
-                         * new Exemplo10().run();
-                         * break;
-                         * case "Exemplo 11":
-                         * new Exemplo11().run();
-                         * break;
-                         */
+                        case "Exemplo 2 - Média Aritmética Ponderada":
+                            Calculator.main(new String[] { "weighted_average" });
+                            break;
+                        case "Exemplo 3 - Salário Final":
+                            Calculator.main(new String[] { "full_salary" });
+                            break;
+                        case "Exemplo 4 - Velocidade Média":
+                            Calculator.main(new String[] { "average_speed" });
+                            break;
+                        case "Exemplo 5 - Variação de Tempo":
+                            Calculator.main(new String[] { "time_variation" });
+                            break;
+                        case "Exemplo 6 - Variação de Distância":
+                            Calculator.main(new String[] { "distance_variation" });
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(frame, "Exemplo não implementado.");
+                            break;
                     }
                 } else {
                     JOptionPane.showMessageDialog(frame, "Selecione um exemplo.");

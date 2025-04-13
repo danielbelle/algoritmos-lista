@@ -1,11 +1,18 @@
 package exemples;
 
-import java.util.Scanner;
-
 public class Calculator {
+    private static String choice;
+
+    public static String getChoice() {
+        return choice;
+    }
+
+    public static void setChoice(String newChoice) {
+        choice = newChoice;
+    }
 
     // Operation details storage
-    private enum Operation {
+    public enum Operation {
         simple_average("simple_average", new String[] { "value1", "value2" }),
         weighted_average("weighted_average", new String[] { "value1", "value2", "weight1", "weight2" }),
         full_salary("full_salary", new String[] { "salary", "salesTotal" }),
@@ -31,38 +38,23 @@ public class Calculator {
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String choice = "distance_variation"; // simple_average, weighted_average, full_salary, average_speed,
-        // time_variation, distance_variation
+        setChoice(args.length > 0 ? args[0] : "distance_variation");
 
         try {
+            // Verifica se a operação é válida
             Operation selectedOp = Operation.valueOf(choice);
-            calculateOperation(selectedOp, scanner);
+
+            // Chama a interface gráfica do ShowExemple
+            ShowExemple showExemple = new ShowExemple();
+            showExemple.run(selectedOp);
+
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid operation selected!");
         }
-
-        scanner.close();
     }
 
-    private static void calculateOperation(Operation operation, Scanner scanner) {
-        System.out.printf("\nOperation %s selected: %s%n", operation.name(), operation.getOperation());
-
-        // Get input values for each variable
-        double[] values = new double[operation.getVariables().length];
-        for (int i = 0; i < operation.getVariables().length; i++) {
-            System.out.printf("Enter value for %s: ", operation.getVariables()[i]);
-            values[i] = scanner.nextDouble();
-        }
-
-        // Calculate result based on operation
-        double result = calculateFormula(operation.getOperation(), values);
-        System.out.printf("Result: %.2f%n", result);
-    }
-
-    private static double calculateFormula(String operation, double[] values) {
-
-        if (operation == "weighted_average" || operation == "simple_average") {
+    public static double calculateFormula(String operation, double[] values) {
+        if (operation.equals("weighted_average") || operation.equals("simple_average")) {
             if (values.length > 2) {
                 if (values[2] + values[3] != 0) {
                     return (values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]);
@@ -72,9 +64,9 @@ public class Calculator {
             } else {
                 return (values[0] + values[1]) / 2;
             }
-        } else if (operation == "full_salary") {
+        } else if (operation.equals("full_salary")) {
             return values[0] + values[1] * (0.15);
-        } else if (operation == "distance_variation") {
+        } else if (operation.equals("distance_variation")) {
             return (values[0] * values[1]);
         } else {
             if (values[1] != 0) {
