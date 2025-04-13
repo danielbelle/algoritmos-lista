@@ -7,36 +7,56 @@ import java.awt.event.ActionListener;
 
 public class ShowExemple {
 
-    public void run(Calculator.Operation selectedOp) {
-        JFrame frame = new JFrame("Resolução de Exemplo: " + selectedOp.getOperationPtbr());
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLayout(new GridLayout(5, 1));
+    public void run(Calculator.Operation selectedOp, JPanel container) {
+        // Configura o GroupLayout
+        GroupLayout layout = new GroupLayout(container);
+        container.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
 
+        // Título da operação
         JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperationPtbr(), SwingConstants.CENTER);
-        frame.add(formulaLabel);
+        formulaLabel.setFont(new Font("Arial", Font.BOLD, 14)); // Fonte menor
 
-        JPanel inputPanel = new JPanel(new GridLayout(0, 2));
-
-        // Campos de entrada para as variáveis da operação
+        // Painel de entrada
+        JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 2, 5, 5));
         JTextField[] inputFields = new JTextField[selectedOp.getVariables().length];
         for (int i = 0; i < selectedOp.getVariables().length; i++) {
             JLabel label = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ":");
-            JTextField textField = new JTextField();
+            label.setFont(new Font("Arial", Font.PLAIN, 12)); // Fonte menor para os rótulos
+            JTextField textField = new JTextField(8); // Define o tamanho preferido do campo de texto
             inputFields[i] = textField;
             inputPanel.add(label);
             inputPanel.add(textField);
         }
-        frame.add(inputPanel);
 
+        // Painel de botões
         JButton calculateButton = new JButton("Calcular");
-        frame.add(calculateButton);
-
         JButton clearButton = new JButton("Limpar");
-        frame.add(clearButton);
 
-        JLabel resultLabel = new JLabel("Resultado: ", SwingConstants.CENTER);
-        frame.add(resultLabel);
+        // Rótulo de resultado
+        JLabel resultLabel = new JLabel("Resultado: ");
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 12)); // Fonte menor para o resultado
+
+        // Configuração do layout horizontal
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(formulaLabel)
+                        .addComponent(inputPanel)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(calculateButton)
+                                .addComponent(clearButton))
+                        .addComponent(resultLabel));
+
+        // Configuração do layout vertical
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addComponent(formulaLabel)
+                        .addComponent(inputPanel)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(calculateButton)
+                                .addComponent(clearButton))
+                        .addComponent(resultLabel));
 
         // Ação do botão "Calcular"
         calculateButton.addActionListener(new ActionListener() {
@@ -52,10 +72,10 @@ public class ShowExemple {
                     double result = Calculator.calculateFormula(selectedOp.getOperation(), values);
                     resultLabel.setText("Resultado: " + result);
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Por favor, insira números válidos.", "Erro",
+                    JOptionPane.showMessageDialog(container, "Por favor, insira números válidos.", "Erro",
                             JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(container, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -70,7 +90,5 @@ public class ShowExemple {
                 resultLabel.setText("Resultado: ");
             }
         });
-
-        frame.setVisible(true);
     }
 }
