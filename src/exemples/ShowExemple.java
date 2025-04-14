@@ -6,26 +6,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShowExemple {
+    private GroupLayout layout; // Declare the layout field
 
-    public void runLeft(JPanel container) {
-        // Configura o GroupLayout
-        GroupLayout layout = new GroupLayout(container);
+    public void main(JPanel container) {
+        layout = new GroupLayout(container);
         container.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
     }
 
     public void run(Calculator.Operation selectedOp, JPanel container) {
-        // Configura o GroupLayout
-        GroupLayout layout = new GroupLayout(container);
-        container.setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
 
         // Título da operação
         JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperationPtbr(), SwingConstants.CENTER);
         formulaLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        System.out.println(selectedOp);
+        // System.out.println(selectedOp.getVariables().length);
 
         if (selectedOp.isComplex()) {
             // Painel de entrada
@@ -114,7 +109,6 @@ public class ShowExemple {
                 }
             });
         } else {
-
             // Painel de entrada
             JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 2, 5, 5));
             JTextField[] inputFields = new JTextField[selectedOp.getVariables().length];

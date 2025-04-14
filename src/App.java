@@ -36,16 +36,19 @@ public class App {
         JScrollPane scrollPane = new JScrollPane(exerciseList);
 
         // Create a panel for the right side (ShowExemple)
-        JPanel rightPanel = new JPanel(new BorderLayout());
+        JPanel leftPanel = new JPanel(new BorderLayout());
 
         // Create a JSplitPane to divide the main frame
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, rightPanel);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, leftPanel);
         splitPane.setDividerLocation(250); // Set initial divider position
         frame.add(splitPane);
 
-        rightPanel.removeAll();
+        // Clear the right panel and add ShowExemple
+        leftPanel.removeAll();
         ShowExemple showExemple = new ShowExemple();
-        // showExemple.runLeft(rightPanel);
+        showExemple.main(leftPanel);
+        leftPanel.revalidate();
+        leftPanel.repaint();
 
         // Add action listener to the list
         exerciseList.addMouseListener(new MouseAdapter() {
@@ -81,12 +84,12 @@ public class App {
                             JOptionPane.showMessageDialog(frame, "Exemplo não implementado.");
                             return;
                     }
-
                     // Clear the right panel and add ShowExemple
-                    rightPanel.removeAll();
-                    showExemple.run(selectedOp, rightPanel);
-                    rightPanel.revalidate();
-                    rightPanel.repaint();
+                    leftPanel.removeAll();
+                    showExemple.run(selectedOp, leftPanel);
+                    leftPanel.revalidate();
+                    leftPanel.repaint();
+
                 }
             }
         });

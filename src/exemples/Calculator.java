@@ -40,7 +40,8 @@ public class Calculator {
         complex_problem("complex_problem", "Problema Complexo",
                 new String[] {},
                 new String[] {},
-                true, new Operation[] {});
+                true,
+                new Operation[] {});
 
         private final String operation;
         private final String operationPtbr;
@@ -100,11 +101,11 @@ public class Calculator {
             return relatedOperations;
         }
 
-        // create a setRelatedOperations
         public void setRelatedOperations(Operation[] relatedOperations) {
             if (!isComplex) {
                 throw new UnsupportedOperationException("Only complex operations can have related operations.");
             }
+
             this.relatedOperations = relatedOperations;
         }
 
@@ -119,20 +120,35 @@ public class Calculator {
             Operation selectedOp = Operation.valueOf(choice);
 
             if (selectedOp.isComplex()) {
-                Operation complexOp = Operation.complex_problem;
-
                 Operation[] relatedOps = new Operation[] {
                         Operation.time_variation,
                         Operation.distance_variation,
                         Operation.average_speed
                 };
 
+                Operation complexOp = Operation.complex_problem;
+
+                complexOp.setRelatedOperations(relatedOps);
+                String[] operationNames = new String[relatedOps.length];
+
+                for (int i = 0; i < relatedOps.length; i++) {
+                    operationNames[i] = relatedOps[i].getOperation();
+                }
+
                 String[] variables = new String[relatedOps.length];
                 String[] variablesNamesPtbr = new String[relatedOps.length];
 
+                complexOp.setVariables(operationNames);
+                String[] operationNamesPtbr = new String[relatedOps.length];
                 for (int i = 0; i < relatedOps.length; i++) {
-                    variables[i] = relatedOps[i].operation;
-                    variablesNamesPtbr[i] = relatedOps[i].operationPtbr;
+                    operationNamesPtbr[i] = relatedOps[i].getOperationPtbr();
+                }
+                complexOp.setVariablesNamesPtbr(operationNamesPtbr);
+
+                for (int i = 0; i < relatedOps.length; i++) {
+                    variables[i] = relatedOps[i].getOperation();
+                    variablesNamesPtbr[i] = relatedOps[i].getOperationPtbr();
+                    System.out.println("Variable: " + variables[i] + ", Name (Pt-BR): " + variablesNamesPtbr[i]);
                 }
 
                 complexOp.setVariables(variables);
