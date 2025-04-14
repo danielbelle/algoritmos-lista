@@ -16,7 +16,7 @@ public class ShowExemple {
 
         // Título da operação
         JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperationPtbr(), SwingConstants.CENTER);
-        formulaLabel.setFont(new Font("Arial", Font.BOLD, 14)); // Fonte menor
+        formulaLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         // Painel de entrada
         JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 2, 5, 5));
