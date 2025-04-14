@@ -64,6 +64,7 @@ public class App {
                         selectedOp = Calculator.Operation.distance_variation;
                         break;
                     case "Exemplo 7 - Motorista do Ônibus":
+                        selectedOp = Calculator.Operation.complex_problem;
                         break;
 
                     default:
