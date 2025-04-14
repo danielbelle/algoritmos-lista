@@ -22,7 +22,7 @@ public class App {
                 "Exemplo 4 - Velocidade Média",
                 "Exemplo 5 - Variação de Tempo",
                 "Exemplo 6 - Variação de Distância",
-                "Exemplo 7 - Exemplo do Ônibus"
+                "Exemplo 7 - Motorista do Ônibus"
 
         };
 
@@ -63,6 +63,9 @@ public class App {
                     case "Exemplo 6 - Variação de Distância":
                         selectedOp = Calculator.Operation.distance_variation;
                         break;
+                    case "Exemplo 7 - Motorista do Ônibus":
+                        break;
+
                     default:
                         JOptionPane.showMessageDialog(frame, "Exemplo não implementado.");
                         return;
