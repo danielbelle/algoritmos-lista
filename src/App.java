@@ -1,14 +1,18 @@
 import javax.swing.*;
+
+import java.awt.event.MouseEvent;
+
 import java.awt.*;
 import exemples.Calculator;
 import exemples.ShowExemple;
+import java.awt.event.MouseAdapter;
 
 public class App {
     public static void main(String[] args) {
         // Create the main frame
         JFrame frame = new JFrame("Exercícios Algoritmos - Daniel Henrique Bellé");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(fullWidth() - 100, fullHeight() - 100);
+        frame.setSize(fullWidth() - 200, fullHeight() - 200);
 
         // Create a label
         JLabel label = new JLabel("Selecione um exemplo para executar:", SwingConstants.CENTER);
@@ -39,45 +43,51 @@ public class App {
         splitPane.setDividerLocation(250); // Set initial divider position
         frame.add(splitPane);
 
+        rightPanel.removeAll();
+        ShowExemple showExemple = new ShowExemple();
+        // showExemple.runLeft(rightPanel);
+
         // Add action listener to the list
-        exerciseList.addListSelectionListener(e -> {
-            String selectedExercise = exerciseList.getSelectedValue();
-            if (selectedExercise != null) {
-                Calculator.Operation selectedOp = null;
-                switch (selectedExercise) {
-                    case "Exemplo 1 - Média Aritmética Simples":
-                        selectedOp = Calculator.Operation.simple_average;
-                        break;
-                    case "Exemplo 2 - Média Aritmética Ponderada":
-                        selectedOp = Calculator.Operation.weighted_average;
-                        break;
-                    case "Exemplo 3 - Salário Final":
-                        selectedOp = Calculator.Operation.full_salary;
-                        break;
-                    case "Exemplo 4 - Velocidade Média":
-                        selectedOp = Calculator.Operation.average_speed;
-                        break;
-                    case "Exemplo 5 - Variação de Tempo":
-                        selectedOp = Calculator.Operation.time_variation;
-                        break;
-                    case "Exemplo 6 - Variação de Distância":
-                        selectedOp = Calculator.Operation.distance_variation;
-                        break;
-                    case "Exemplo 7 - Motorista do Ônibus":
-                        selectedOp = Calculator.Operation.complex_problem;
-                        break;
+        exerciseList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                String selectedExercise = exerciseList.getSelectedValue();
+                if (selectedExercise != null) {
+                    Calculator.Operation selectedOp = null;
+                    switch (selectedExercise) {
+                        case "Exemplo 1 - Média Aritmética Simples":
+                            selectedOp = Calculator.Operation.simple_average;
+                            break;
+                        case "Exemplo 2 - Média Aritmética Ponderada":
+                            selectedOp = Calculator.Operation.weighted_average;
+                            break;
+                        case "Exemplo 3 - Salário Final":
+                            selectedOp = Calculator.Operation.full_salary;
+                            break;
+                        case "Exemplo 4 - Velocidade Média":
+                            selectedOp = Calculator.Operation.average_speed;
+                            break;
+                        case "Exemplo 5 - Variação de Tempo":
+                            selectedOp = Calculator.Operation.time_variation;
+                            break;
+                        case "Exemplo 6 - Variação de Distância":
+                            selectedOp = Calculator.Operation.distance_variation;
+                            break;
+                        case "Exemplo 7 - Motorista do Ônibus":
+                            selectedOp = Calculator.Operation.complex_problem;
+                            break;
 
-                    default:
-                        JOptionPane.showMessageDialog(frame, "Exemplo não implementado.");
-                        return;
+                        default:
+                            JOptionPane.showMessageDialog(frame, "Exemplo não implementado.");
+                            return;
+                    }
+
+                    // Clear the right panel and add ShowExemple
+                    rightPanel.removeAll();
+                    showExemple.run(selectedOp, rightPanel);
+                    rightPanel.revalidate();
+                    rightPanel.repaint();
                 }
-
-                // Clear the right panel and add ShowExemple
-                rightPanel.removeAll();
-                ShowExemple showExemple = new ShowExemple();
-                showExemple.run(selectedOp, rightPanel);
-                rightPanel.revalidate();
-                rightPanel.repaint();
             }
         });
 

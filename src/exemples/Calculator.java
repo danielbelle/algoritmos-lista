@@ -147,14 +147,13 @@ public class Calculator {
                 };
 
                 double[] result = solveComplexProblem(complexOp, values);
-                System.out.println("Resultado do Problema Complexo: " + result);
-            } else {
 
-                // Chama a interface gráfica do ShowExemple
-                ShowExemple showExemple = new ShowExemple();
-                showExemple.run(selectedOp, null);
-
+                // System.out.println("Resultado do Problema Complexo: " + result);
             }
+
+            // Chama a interface gráfica do ShowExemple
+            // ShowExemple showExemple = new ShowExemple();
+            // showExemple.run(selectedOp, null);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid operation selected!");
