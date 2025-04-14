@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 
 import java.awt.*;
 import exemples.Calculator;
+import exemples.Calculator.Operation;
 import exemples.ShowExemple;
 import java.awt.event.MouseAdapter;
 
@@ -56,28 +57,28 @@ public class App {
             public void mousePressed(MouseEvent e) {
                 String selectedExercise = exerciseList.getSelectedValue();
                 if (selectedExercise != null) {
-                    Calculator.Operation selectedOp = null;
+                    Operation selectedOp = null;
                     switch (selectedExercise) {
                         case "Exemplo 1 - Média Aritmética Simples":
-                            selectedOp = Calculator.Operation.simple_average;
+                            selectedOp = Operation.simple_average;
                             break;
                         case "Exemplo 2 - Média Aritmética Ponderada":
-                            selectedOp = Calculator.Operation.weighted_average;
+                            selectedOp = Operation.weighted_average;
                             break;
                         case "Exemplo 3 - Salário Final":
-                            selectedOp = Calculator.Operation.full_salary;
+                            selectedOp = Operation.full_salary;
                             break;
                         case "Exemplo 4 - Velocidade Média":
-                            selectedOp = Calculator.Operation.average_speed;
+                            selectedOp = Operation.average_speed;
                             break;
                         case "Exemplo 5 - Variação de Tempo":
-                            selectedOp = Calculator.Operation.time_variation;
+                            selectedOp = Operation.time_variation;
                             break;
                         case "Exemplo 6 - Variação de Distância":
-                            selectedOp = Calculator.Operation.distance_variation;
+                            selectedOp = Operation.distance_variation;
                             break;
                         case "Exemplo 7 - Motorista do Ônibus":
-                            selectedOp = Calculator.Operation.complex_problem;
+                            selectedOp = Operation.complex_problem;
                             break;
 
                         default:

@@ -38,9 +38,7 @@ public class Calculator {
                 new String[] { "Velocidade Média", "Variação de Tempo" },
                 false, null),
         complex_problem("complex_problem", "Problema Complexo",
-                new String[] {},
-                new String[] {},
-                true,
+                null, null, true,
                 new Operation[] {});
 
         private final String operation;
@@ -166,10 +164,6 @@ public class Calculator {
 
                 // System.out.println("Resultado do Problema Complexo: " + result);
             }
-
-            // Chama a interface gráfica do ShowExemple
-            // ShowExemple showExemple = new ShowExemple();
-            // showExemple.run(selectedOp, null);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid operation selected!");
