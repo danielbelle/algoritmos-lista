@@ -21,45 +21,41 @@ public class ShowExemple {
 	public void run(Operation selectedOp, JPanel container) {
 		container.removeAll(); // Limpa o container antes de adicionar novos componentes
 
-		if (selectedOp.isComplex()) {
-			// Configura o layout GroupLayout
-			layout = new GroupLayout(container);
-			container.setLayout(layout);
-			layout.setAutoCreateGaps(true);
-			layout.setAutoCreateContainerGaps(true);
+		// Configura o layout GroupLayout
+		layout = new GroupLayout(container);
+		container.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
 
-			// Criação dos 3 painéis usando o método simplePanel
-			JPanel panelOne = simplePanel(selectedOp);
-			JPanel panelTwo = simplePanel(selectedOp);
-			JPanel panelThree = simplePanel(selectedOp);
+		int quantidade = !selectedOp.isComplex() ? 1 : 2;
 
-			// Configuração do layout horizontal
-			layout.setHorizontalGroup(
-					layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-							.addGroup(layout.createSequentialGroup()
-									.addComponent(panelOne, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-											GroupLayout.PREFERRED_SIZE)
-									.addComponent(panelTwo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-											GroupLayout.PREFERRED_SIZE)
-									.addComponent(panelThree, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-											GroupLayout.PREFERRED_SIZE)));
+		// Array para armazenar os painéis criados
+		JPanel[] panels = new JPanel[quantidade];
 
-			// Configuração do layout vertical
-			layout.setVerticalGroup(
-					layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-									.addComponent(panelOne, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-											GroupLayout.PREFERRED_SIZE)
-									.addComponent(panelTwo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-											GroupLayout.PREFERRED_SIZE)
-									.addComponent(panelThree, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-											GroupLayout.PREFERRED_SIZE)));
-		} else {
-			// Configuração para operações simples
-			JPanel inputPanel = simplePanel(selectedOp);
-			container.setLayout(new BorderLayout());
-			container.add(inputPanel, BorderLayout.CENTER);
+		// Loop para criar os painéis dinamicamente
+		for (int i = 0; i < quantidade; i++) {
+			panels[i] = simplePanel(selectedOp);
 		}
+
+		// Configuração do layout horizontal
+		GroupLayout.SequentialGroup horizontalGroup = layout.createSequentialGroup();
+		for (JPanel panel : panels) {
+			horizontalGroup.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+					GroupLayout.PREFERRED_SIZE);
+		}
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+						.addGroup(horizontalGroup));
+
+		// Configuração do layout vertical
+		GroupLayout.ParallelGroup verticalGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+		for (JPanel panel : panels) {
+			verticalGroup.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+					GroupLayout.PREFERRED_SIZE);
+		}
+		layout.setVerticalGroup(
+				layout.createSequentialGroup()
+						.addGroup(verticalGroup));
 
 		container.revalidate();
 		container.repaint();
