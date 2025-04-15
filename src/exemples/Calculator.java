@@ -1,7 +1,5 @@
 package exemples;
 
-import exemples.Calculator.Operation;
-
 public class Calculator {
 	private static String choice;
 

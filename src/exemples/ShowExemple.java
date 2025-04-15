@@ -19,19 +19,16 @@ public class ShowExemple {
   }
 
   public void run(Operation selectedOp, JPanel container) {
-    Operation[] listedOperations = null;
-
     container.removeAll(); // Limpa o container antes de adicionar novos componentes
-    listedOperations = new Operation[] {
-        Operation.time_variation,
-        Operation.distance_variation,
-        Operation.average_speed
-    };
+
     // Configura o layout GroupLayout
     layout = new GroupLayout(container);
     container.setLayout(layout);
     layout.setAutoCreateGaps(true);
     layout.setAutoCreateContainerGaps(true);
+
+    // Define as operações listadas
+    Operation[] listedOperations = selectedOp.getRelatedOperations();
 
     int numberOfPanel = !selectedOp.isComplex() ? 1 : listedOperations.length;
 
@@ -40,10 +37,8 @@ public class ShowExemple {
 
     // Loop para criar os painéis dinamicamente
     for (int i = 0; i < numberOfPanel; i++) {
-      if (numberOfPanel > 1) {
-        selectedOp = listedOperations[i];
-      }
-      panels[i] = simplePanel(selectedOp);
+      Operation currentOp = numberOfPanel > 1 ? listedOperations[i] : selectedOp;
+      panels[i] = simplePanel(currentOp);
     }
 
     // Configuração do layout horizontal
@@ -62,9 +57,59 @@ public class ShowExemple {
       verticalGroup.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
           GroupLayout.PREFERRED_SIZE);
     }
-    layout.setVerticalGroup(
-        layout.createSequentialGroup()
-            .addGroup(verticalGroup));
+
+    // Adiciona o painel de combinação de resultados apenas se numberOfPanel > 1
+    if (numberOfPanel > 1) {
+      // Painel para exibir a combinação de resultados
+      JPanel combinedResultPanel = new JPanel();
+      combinedResultPanel.setLayout(new BoxLayout(combinedResultPanel, BoxLayout.Y_AXIS));
+      combinedResultPanel.setBorder(BorderFactory.createTitledBorder("Combinação de Resultados"));
+
+      JLabel combinedResultLabel = new JLabel("Resultado Combinado: ");
+      combinedResultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+      combinedResultPanel.add(combinedResultLabel);
+
+      JButton calculateCombinedButton = new JButton("Calcular Combinação");
+      combinedResultPanel.add(calculateCombinedButton);
+
+      // Ação do botão "Calcular Combinação"
+      calculateCombinedButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          try {
+            double combinedResult = 0;
+            for (JPanel panel : panels) {
+              JLabel resultLabel = (JLabel) panel.getComponent(panel.getComponentCount() - 1);
+              String text = resultLabel.getText().replace("Resultado: ", "").trim();
+              if (!text.isEmpty()) {
+                combinedResult += Double.parseDouble(text);
+              }
+            }
+            combinedResultLabel.setText("Resultado Combinado: " + combinedResult);
+          } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(container, "Erro ao combinar resultados.", "Erro",
+                JOptionPane.ERROR_MESSAGE);
+          }
+        }
+      });
+
+      // Adiciona o painel de combinação ao layout
+      layout.setHorizontalGroup(
+          layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+              .addGroup(horizontalGroup)
+              .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                  GroupLayout.PREFERRED_SIZE));
+
+      layout.setVerticalGroup(
+          layout.createSequentialGroup()
+              .addGroup(verticalGroup)
+              .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                  GroupLayout.PREFERRED_SIZE));
+    } else {
+      layout.setVerticalGroup(
+          layout.createSequentialGroup()
+              .addGroup(verticalGroup));
+    }
 
     container.revalidate();
     container.repaint();

@@ -12,7 +12,7 @@ public class App {
         // Create the main frame
         JFrame frame = new JFrame("Exercícios Algoritmos - Daniel Henrique Bellé");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(fullWidth() - 200, fullHeight() - 200);
+        frame.setSize(getFullScreenSize(-150, -150));
 
         // Create a label
         JLabel label = new JLabel("Selecione um exemplo para executar:", SwingConstants.CENTER);
@@ -26,7 +26,11 @@ public class App {
                 "Exemplo 4 - Velocidade Média",
                 "Exemplo 5 - Variação de Tempo",
                 "Exemplo 6 - Variação de Distância",
-                "Exemplo 7 - Motorista do Ônibus"
+                "Exemplo 7 - Motorista do Ônibus",
+                "Exemplo 8 - ",
+                "Exemplo 9 - ",
+                "Exemplo 10 - ",
+                "Exemplo 11 - ",
 
         };
 
@@ -78,6 +82,33 @@ public class App {
                             break;
                         case "Exemplo 7 - Motorista do Ônibus":
                             selectedOp = Operation.complex_problem;
+                            selectedOp.setRelatedOperations(
+                                    new Operation[] { Operation.time_variation,
+                                            Operation.distance_variation });
+                            break;
+                        case "Exemplo 8":
+                            selectedOp = Operation.complex_problem;
+                            selectedOp.setRelatedOperations(
+                                    new Operation[] { Operation.time_variation,
+                                            Operation.distance_variation });
+                            break;
+                        case "Exemplo 9":
+                            selectedOp = Operation.complex_problem;
+                            selectedOp.setRelatedOperations(
+                                    new Operation[] { Operation.time_variation,
+                                            Operation.distance_variation });
+                            break;
+                        case "Exemplo 10":
+                            selectedOp = Operation.complex_problem;
+                            selectedOp.setRelatedOperations(
+                                    new Operation[] { Operation.time_variation,
+                                            Operation.distance_variation });
+                            break;
+                        case "Exemplo 11":
+                            selectedOp = Operation.complex_problem;
+                            selectedOp.setRelatedOperations(
+                                    new Operation[] { Operation.time_variation,
+                                            Operation.distance_variation });
                             break;
 
                         default:
@@ -98,15 +129,10 @@ public class App {
         frame.setVisible(true);
     }
 
-    private static int fullHeight() {
-        // get full height of the screen
+    private static Dimension getFullScreenSize(int widthOffset, int heightOffset) {
+        // Get full screen dimensions and apply offsets
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return (int) screenSize.getHeight();
+        return new Dimension(screenSize.width + widthOffset, screenSize.height + heightOffset);
     }
 
-    private static int fullWidth() {
-        // get full width of the screen
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return (int) screenSize.getWidth();
-    }
 }
