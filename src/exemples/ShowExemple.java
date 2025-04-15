@@ -68,7 +68,7 @@ public class ShowExemple {
 	public JPanel simplePanel(Calculator.Operation selectedOp) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Usa BoxLayout para organizar os componentes
-																															// verticalmente
+		// verticalmente
 
 		// Título da operação
 		JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperationPtbr(), SwingConstants.CENTER);
