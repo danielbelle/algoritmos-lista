@@ -36,8 +36,8 @@ public class Calculator {
 				new String[] { "Velocidade Média", "Variação de Tempo" },
 				false, null),
 		complex_problem("complex_problem", "Problema Complexo",
-				new String[] { "averageVelocity", "timeVariation" },
-				new String[] { "Velocidade Média", "Variação de Tempo" }, true,
+				null,
+				null, true,
 				new Operation[] {});
 
 		private final String operation;
