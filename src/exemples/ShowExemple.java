@@ -18,7 +18,7 @@ public class ShowExemple {
 		layout.setAutoCreateContainerGaps(true);
 	}
 
-	public void run(Calculator.Operation selectedOp, JPanel container) {
+	public void run(Operation selectedOp, JPanel container) {
 		container.removeAll(); // Limpa o container antes de adicionar novos componentes
 
 		if (selectedOp.isComplex()) {
@@ -65,18 +65,18 @@ public class ShowExemple {
 		container.repaint();
 	}
 
-	public JPanel simplePanel(Calculator.Operation selectedOp) {
+	public JPanel simplePanel(Operation selectedOp) {
 		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Usa BoxLayout para organizar os componentes
-		// verticalmente
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		// Usa BoxLayout para organizar os componentes verticalmente
 
 		// Título da operação
 		JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperationPtbr(), SwingConstants.CENTER);
-		formulaLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		formulaLabel.setFont(new Font("Arial", Font.BOLD, 12));
 		panel.add(formulaLabel);
 
 		// Campos de entrada
-		JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 2, 5, 5));
+		JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 1, 5, 5));
 		JTextField[] inputFields = new JTextField[selectedOp.getVariables().length];
 		for (int i = 0; i < selectedOp.getVariables().length; i++) {
 			JLabel label = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ":");
