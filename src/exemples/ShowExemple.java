@@ -9,127 +9,135 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShowExemple {
-	private GroupLayout layout; // Declare the layout field
+  private GroupLayout layout; // Declare the layout field
 
-	public void main(JPanel container) {
-		layout = new GroupLayout(container);
-		container.setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
-	}
+  public void main(JPanel container) {
+    layout = new GroupLayout(container);
+    container.setLayout(layout);
+    layout.setAutoCreateGaps(true);
+    layout.setAutoCreateContainerGaps(true);
+  }
 
-	public void run(Operation selectedOp, JPanel container) {
-		container.removeAll(); // Limpa o container antes de adicionar novos componentes
+  public void run(Operation selectedOp, JPanel container) {
+    Operation[] listedOperations = null;
 
-		// Configura o layout GroupLayout
-		layout = new GroupLayout(container);
-		container.setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
+    container.removeAll(); // Limpa o container antes de adicionar novos componentes
+    listedOperations = new Operation[] {
+        Operation.time_variation,
+        Operation.distance_variation,
+        Operation.average_speed
+    };
+    // Configura o layout GroupLayout
+    layout = new GroupLayout(container);
+    container.setLayout(layout);
+    layout.setAutoCreateGaps(true);
+    layout.setAutoCreateContainerGaps(true);
 
-		int quantidade = !selectedOp.isComplex() ? 1 : 2;
+    int numberOfPanel = !selectedOp.isComplex() ? 1 : listedOperations.length;
 
-		// Array para armazenar os painéis criados
-		JPanel[] panels = new JPanel[quantidade];
+    // Array para armazenar os painéis criados
+    JPanel[] panels = new JPanel[numberOfPanel];
 
-		// Loop para criar os painéis dinamicamente
-		for (int i = 0; i < quantidade; i++) {
-			panels[i] = simplePanel(selectedOp);
-		}
+    // Loop para criar os painéis dinamicamente
+    for (int i = 0; i < numberOfPanel; i++) {
+      if (numberOfPanel > 1) {
+        selectedOp = listedOperations[i];
+      }
+      panels[i] = simplePanel(selectedOp);
+    }
 
-		// Configuração do layout horizontal
-		GroupLayout.SequentialGroup horizontalGroup = layout.createSequentialGroup();
-		for (JPanel panel : panels) {
-			horizontalGroup.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-					GroupLayout.PREFERRED_SIZE);
-		}
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-						.addGroup(horizontalGroup));
+    // Configuração do layout horizontal
+    GroupLayout.SequentialGroup horizontalGroup = layout.createSequentialGroup();
+    for (JPanel panel : panels) {
+      horizontalGroup.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+          GroupLayout.PREFERRED_SIZE);
+    }
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+            .addGroup(horizontalGroup));
 
-		// Configuração do layout vertical
-		GroupLayout.ParallelGroup verticalGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-		for (JPanel panel : panels) {
-			verticalGroup.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-					GroupLayout.PREFERRED_SIZE);
-		}
-		layout.setVerticalGroup(
-				layout.createSequentialGroup()
-						.addGroup(verticalGroup));
+    // Configuração do layout vertical
+    GroupLayout.ParallelGroup verticalGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
+    for (JPanel panel : panels) {
+      verticalGroup.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+          GroupLayout.PREFERRED_SIZE);
+    }
+    layout.setVerticalGroup(
+        layout.createSequentialGroup()
+            .addGroup(verticalGroup));
 
-		container.revalidate();
-		container.repaint();
-	}
+    container.revalidate();
+    container.repaint();
+  }
 
-	public JPanel simplePanel(Operation selectedOp) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		// Usa BoxLayout para organizar os componentes verticalmente
+  public JPanel simplePanel(Operation selectedOp) {
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setBorder(BorderFactory.createTitledBorder(
+        BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.BLACK),
+            BorderFactory.createEmptyBorder(2, 15, 15, 15)),
+        selectedOp.getOperationPtbr()));
 
-		// Título da operação
-		JLabel formulaLabel = new JLabel("Operação: " + selectedOp.getOperationPtbr(), SwingConstants.CENTER);
-		formulaLabel.setFont(new Font("Arial", Font.BOLD, 12));
-		panel.add(formulaLabel);
+    // Campos de entrada
+    JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 1, 5, 5));
+    JTextField[] inputFields = new JTextField[selectedOp.getVariables().length];
+    for (int i = 0; i < selectedOp.getVariables().length; i++) {
+      JLabel label = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ":");
+      label.setFont(new Font("Arial", Font.PLAIN, 12));
+      JTextField textField = new JTextField(8);
+      inputFields[i] = textField;
+      inputPanel.add(label);
+      inputPanel.add(textField);
+    }
+    panel.add(inputPanel);
 
-		// Campos de entrada
-		JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 1, 5, 5));
-		JTextField[] inputFields = new JTextField[selectedOp.getVariables().length];
-		for (int i = 0; i < selectedOp.getVariables().length; i++) {
-			JLabel label = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ":");
-			label.setFont(new Font("Arial", Font.PLAIN, 12));
-			JTextField textField = new JTextField(8);
-			inputFields[i] = textField;
-			inputPanel.add(label);
-			inputPanel.add(textField);
-		}
-		panel.add(inputPanel);
+    // Botões
+    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+    JButton calculateButton = new JButton("Calcular");
+    JButton clearButton = new JButton("Limpar");
+    buttonPanel.add(calculateButton);
+    buttonPanel.add(clearButton);
+    panel.add(buttonPanel);
 
-		// Botões
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-		JButton calculateButton = new JButton("Calcular");
-		JButton clearButton = new JButton("Limpar");
-		buttonPanel.add(calculateButton);
-		buttonPanel.add(clearButton);
-		panel.add(buttonPanel);
+    // Rótulo de resultado
+    JLabel resultLabel = new JLabel("Resultado: ");
+    resultLabel.setFont(new Font("Arial", Font.BOLD, 12));
+    panel.add(resultLabel);
 
-		// Rótulo de resultado
-		JLabel resultLabel = new JLabel("Resultado: ");
-		resultLabel.setFont(new Font("Arial", Font.BOLD, 12));
-		panel.add(resultLabel);
+    // Ação do botão "Calcular"
+    calculateButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          double[] values = new double[inputFields.length];
+          for (int i = 0; i < inputFields.length; i++) {
+            values[i] = Double.parseDouble(inputFields[i].getText());
+          }
 
-		// Ação do botão "Calcular"
-		calculateButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					double[] values = new double[inputFields.length];
-					for (int i = 0; i < inputFields.length; i++) {
-						values[i] = Double.parseDouble(inputFields[i].getText());
-					}
+          // Chama o método de cálculo do Calculator
+          double result = Calculator.calculateFormula(selectedOp.getOperation(), values);
+          resultLabel.setText("Resultado: " + result);
+        } catch (NumberFormatException ex) {
+          JOptionPane.showMessageDialog(panel, "Por favor, insira números válidos.", "Erro",
+              JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+          JOptionPane.showMessageDialog(panel, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    });
 
-					// Chama o método de cálculo do Calculator
-					double result = Calculator.calculateFormula(selectedOp.getOperation(), values);
-					resultLabel.setText("Resultado: " + result);
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(panel, "Por favor, insira números válidos.", "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(panel, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+    // Ação do botão "Limpar"
+    clearButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        for (JTextField field : inputFields) {
+          field.setText("");
+        }
+        resultLabel.setText("Resultado: ");
+      }
+    });
 
-		// Ação do botão "Limpar"
-		clearButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (JTextField field : inputFields) {
-					field.setText("");
-				}
-				resultLabel.setText("Resultado: ");
-			}
-		});
-
-		return panel;
-	}
+    return panel;
+  }
 }
