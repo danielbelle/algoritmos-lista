@@ -63,14 +63,24 @@ public class ShowExemple {
       // Painel para exibir a combinação de resultados
       JPanel combinedResultPanel = new JPanel();
       combinedResultPanel.setLayout(new BoxLayout(combinedResultPanel, BoxLayout.Y_AXIS));
-      combinedResultPanel.setBorder(BorderFactory.createTitledBorder("Combinação de Resultados"));
+      combinedResultPanel.setBorder(BorderFactory.createTitledBorder(
+          BorderFactory.createCompoundBorder(
+              BorderFactory.createLineBorder(Color.BLACK),
+              BorderFactory.createEmptyBorder(5, 5, 5, 5)),
+          "Combinação de Resultados"));
+      combinedResultPanel.setPreferredSize(new Dimension(350, 200));
 
-      JLabel combinedResultLabel = new JLabel("Resultado Combinado: ");
-      combinedResultLabel.setFont(new Font("Arial", Font.BOLD, 14));
-      combinedResultPanel.add(combinedResultLabel);
+      // Adiciona labels para cada variável da operação
+      for (int i = 0; i < selectedOp.getVariablesNamesPtbr().length; i++) {
+        JLabel variableLabel = new JLabel(selectedOp.getVariablesNamesPtbr()[i]);
+        variableLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        combinedResultPanel.add(variableLabel);
+      }
 
       JButton calculateCombinedButton = new JButton("Calcular Combinação");
       combinedResultPanel.add(calculateCombinedButton);
+
+      JLabel combinedResultLabel = new JLabel();
 
       // Ação do botão "Calcular Combinação"
       calculateCombinedButton.addActionListener(new ActionListener() {

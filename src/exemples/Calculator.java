@@ -35,7 +35,7 @@ public class Calculator {
 				false, null),
 		complex_problem("complex_problem", "Problema Complexo",
 				null,
-				null, true,
+				new String[] {}, true,
 				new Operation[] {});
 
 		private final String operation;
