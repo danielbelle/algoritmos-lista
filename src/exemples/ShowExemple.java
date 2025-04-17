@@ -70,36 +70,71 @@ public class ShowExemple {
           "Combinação de Resultados"));
       combinedResultPanel.setPreferredSize(new Dimension(350, 200));
 
-      // Adiciona labels para cada variável da operação
       for (int i = 0; i < selectedOp.getVariablesNamesPtbr().length; i++) {
-        JLabel variableLabel = new JLabel(selectedOp.getVariablesNamesPtbr()[i]);
+        JPanel variableResultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel variableLabel = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ": ");
         variableLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        combinedResultPanel.add(variableLabel);
+        JLabel resultValueLabel = new JLabel("0.0"); // Valor inicial
+        resultValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        variableResultPanel.add(variableLabel);
+        variableResultPanel.add(resultValueLabel);
+        combinedResultPanel.add(variableResultPanel);
       }
 
       JButton calculateCombinedButton = new JButton("Calcular Combinação");
       combinedResultPanel.add(calculateCombinedButton);
 
-      JLabel combinedResultLabel = new JLabel();
-
       // Ação do botão "Calcular Combinação"
-      calculateCombinedButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          try {
-            double combinedResult = 0;
-            for (JPanel panel : panels) {
-              JLabel resultLabel = (JLabel) panel.getComponent(panel.getComponentCount() - 1);
-              String text = resultLabel.getText().replace("Resultado: ", "").trim();
-              if (!text.isEmpty()) {
-                combinedResult += Double.parseDouble(text);
+      calculateCombinedButton.addActionListener(e -> {
+        try {
+          java.util.List<Double> savedData = new java.util.ArrayList<>();
+
+          // Itera sobre os painéis para acessar os valores de inputFields[] e resultLabel
+          for (JPanel panel : panels) {
+            JPanel inputPanel = (JPanel) panel.getComponent(0); // Assume que o inputPanel é o primeiro componente
+            for (Component component : inputPanel.getComponents()) {
+              if (component instanceof JTextField) {
+                String inputText = ((JTextField) component).getText().trim();
+                if (!inputText.isEmpty()) {
+                  savedData.add(Double.parseDouble(inputText));
+                }
               }
             }
-            combinedResultLabel.setText("Resultado Combinado: " + combinedResult);
-          } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(container, "Erro ao combinar resultados.", "Erro",
-                JOptionPane.ERROR_MESSAGE);
+            JLabel resultLabel = (JLabel) panel.getComponent(panel.getComponentCount() - 1); // Último componente
+            String resultText = resultLabel.getText().replaceAll("[^0-9.]", "").trim();
+            if (!resultText.isEmpty()) {
+              savedData.add(Double.parseDouble(resultText));
+            }
           }
+
+          // Atualiza os valores no painel de combinação de resultados
+          Component[] combinedResultComponents = combinedResultPanel.getComponents();
+          for (int index = 0; index < combinedResultComponents.length; index++) {
+            if (combinedResultComponents[index] instanceof JPanel variableResultPanel) {
+              for (Component subComponent : variableResultPanel.getComponents()) {
+                if (subComponent instanceof JLabel label && !label.getFont().isBold()) {
+                  double value = switch (index) {
+                    case 0 -> savedData.get(2);
+                    case 1 -> savedData.get(5);
+                    case 2 -> savedData.get(5) - savedData.get(0);
+                    case 3 ->
+                      savedData.get(1) != 0 ? (savedData.get(5) - savedData.get(0)) / savedData.get(1) : Double.NaN;
+                    default -> Double.NaN;
+                  };
+                  label.setText(Double.isNaN(value) ? "N/A" : String.valueOf(value));
+                }
+              }
+            }
+          }
+
+        } catch (NumberFormatException ex) {
+          JOptionPane.showMessageDialog(combinedResultPanel,
+              "Por favor, insira números válidos e certifique-se de calcular os resultados individuais antes de calcular a combinação.",
+              "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+          JOptionPane.showMessageDialog(combinedResultPanel,
+              "Ocorreu um erro. Verifique os números de entrada e tente novamente.",
+              "Erro", JOptionPane.ERROR_MESSAGE);
         }
       });
 
@@ -115,7 +150,9 @@ public class ShowExemple {
               .addGroup(verticalGroup)
               .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
                   GroupLayout.PREFERRED_SIZE));
-    } else {
+    } else
+
+    {
       layout.setVerticalGroup(
           layout.createSequentialGroup()
               .addGroup(verticalGroup));
