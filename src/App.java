@@ -28,7 +28,7 @@ public class App {
 				"Exemplo 5 - Variação de Tempo",
 				"Exemplo 6 - Variação de Distância",
 				"Exemplo 7 - Motorista do Ônibus",
-				"Exemplo 8 - ",
+				"Exemplo 8 - Metrô",
 				"Exemplo 9 - ",
 				"Exemplo 10 - ",
 				"Exemplo 11 - ",
@@ -90,12 +90,19 @@ public class App {
 									"Tempo Total", "Distância Percorrida", "Distância Restante",
 									"Tempo Restante"
 							});
+							selectedOp.setVariables(new String[] {
+									"Exemplo 7 - Motorista do Ônibus" });
 							break;
-						case "Exemplo 8 - ":
+						case "Exemplo 8 - Metrô":
 							selectedOp = Operation.complex_problem;
 							selectedOp.setRelatedOperations(
 									new Operation[] { Operation.time_variation,
-											Operation.distance_variation });
+											Operation.time_variation });
+							selectedOp.setVariablesNamesPtbr(new String[] {
+									"Tempo Total", "Tempo Ajustado", "Diferença de Tempo", "Diferença de Distância"
+							});
+							selectedOp.setVariables(new String[] {
+									"Exemplo 8 - Metrô" });
 							break;
 						case "Exemplo 9 - ":
 							selectedOp = Operation.complex_problem;

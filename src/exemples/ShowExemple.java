@@ -113,21 +113,7 @@ public class ShowExemple {
             if (combinedResultComponents[index] instanceof JPanel variableResultPanel) {
               for (Component subComponent : variableResultPanel.getComponents()) {
                 if (subComponent instanceof JLabel label && !label.getFont().isBold()) {
-                  double value = switch (index) {
-                    case 0 -> savedData.get(2) * 60;
-                    case 1 -> savedData.get(5);
-                    case 2 -> Math.abs(savedData.get(5) - savedData.get(0));
-                    case 3 ->
-                      savedData.get(1) != 0 ? Math.abs(savedData.get(5) - savedData.get(0)) * 60 / savedData.get(1)
-                          : Double.NaN;
-                    default -> Double.NaN;
-                  };
-                  String unit = switch (index) {
-                    case 0, 3 -> " minutos";
-                    case 1, 2 -> " quilômetros";
-                    default -> "";
-                  };
-                  label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+                  Calculator.calculateComplexFormula(index, savedData, label, selectedOp.getVariables()[0]);
                 }
               }
             }

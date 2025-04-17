@@ -1,5 +1,7 @@
 package exemples;
 
+import javax.swing.JLabel;
+
 public class Calculator {
 	private static String choice;
 
@@ -147,5 +149,54 @@ public class Calculator {
 				throw new ArithmeticException("Division by zero is not allowed.");
 			}
 		}
+	}
+
+	public static Double calculateComplexFormula(int index, java.util.List<Double> savedData, JLabel label,
+			String exempleName) {
+		if (savedData == null || savedData.size() < 6) {
+			throw new IllegalArgumentException("Dados insuficientes para o cálculo.");
+		}
+		double value = 0.0;
+		switch (exempleName) {
+			case "Exemplo 7 - Motorista do Ônibus":
+				value = switch (index) {
+					case 0 -> savedData.get(2) * 60; // Exemplo: converte para minutos
+					case 1 -> savedData.get(5); // Exemplo: retorna um valor específico
+					case 2 -> Math.abs(savedData.get(5) - savedData.get(0)); // Exemplo: diferença absoluta
+					case 3 -> savedData.get(1) != 0
+							? Math.abs(savedData.get(5) - savedData.get(0)) * 60 / savedData.get(1) // Exemplo: cálculo com
+							// div
+							: Double.NaN; // Evita divisão por zero
+					default -> Double.NaN; // Caso padrão
+				};
+
+				String unit = switch (index) {
+					case 0, 3 -> " minutos"; // Unidades para os índices 0 e 3
+					case 1, 2 -> " quilômetros"; // Unidades para os índices 1 e 2
+					default -> ""; // Sem unidade para outros casos
+				};
+				// Atualiza o rótulo com o valor calculado
+				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+
+			case "Exemplo 8 - Metrô":
+				value = switch (index) {
+					case 0 -> savedData.get(0) / savedData.get(1);
+					case 1 -> savedData.get(0) / savedData.get(2);
+					case 2 -> Math.abs((savedData.get(0) / savedData.get(1)) - (savedData.get(0) / savedData.get(2)));
+					case 3 -> (savedData.get(0) / savedData.get(1)) * savedData.get(2);
+					default -> Double.NaN; // Caso padrão
+				};
+
+				String unit2 = switch (index) {
+					case 0, 1, 2 -> " horas"; // Unidades para os índices 0 e 3
+					case 3 -> " quilômetros"; // Unidades para os índices 1 e 2
+					default -> ""; // Sem unidade para outros casos
+				};
+				// Atualiza o rótulo com o valor calculado
+				label.setText(Double.isNaN(value) ? "N/A" : value + unit2);
+
+				break;
+		}
+		return value;
 	}
 }
