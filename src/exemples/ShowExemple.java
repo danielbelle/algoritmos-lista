@@ -114,15 +114,20 @@ public class ShowExemple {
               for (Component subComponent : variableResultPanel.getComponents()) {
                 if (subComponent instanceof JLabel label && !label.getFont().isBold()) {
                   double value = switch (index) {
-                    case 0 -> savedData.get(2);
+                    case 0 -> savedData.get(2) * 60;
                     case 1 -> savedData.get(5);
                     case 2 -> Math.abs(savedData.get(5) - savedData.get(0));
                     case 3 ->
-                      savedData.get(1) != 0 ? Math.abs(savedData.get(5) - savedData.get(0)) / savedData.get(1)
+                      savedData.get(1) != 0 ? Math.abs(savedData.get(5) - savedData.get(0)) * 60 / savedData.get(1)
                           : Double.NaN;
                     default -> Double.NaN;
                   };
-                  label.setText(Double.isNaN(value) ? "N/A" : String.valueOf(value));
+                  String unit = switch (index) {
+                    case 0, 3 -> " minutos";
+                    case 1, 2 -> " quilômetros";
+                    default -> "";
+                  };
+                  label.setText(Double.isNaN(value) ? "N/A" : value + unit);
                 }
               }
             }
