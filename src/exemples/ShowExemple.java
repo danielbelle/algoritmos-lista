@@ -116,9 +116,10 @@ public class ShowExemple {
                   double value = switch (index) {
                     case 0 -> savedData.get(2);
                     case 1 -> savedData.get(5);
-                    case 2 -> savedData.get(5) - savedData.get(0);
+                    case 2 -> Math.abs(savedData.get(5) - savedData.get(0));
                     case 3 ->
-                      savedData.get(1) != 0 ? (savedData.get(5) - savedData.get(0)) / savedData.get(1) : Double.NaN;
+                      savedData.get(1) != 0 ? Math.abs(savedData.get(5) - savedData.get(0)) / savedData.get(1)
+                          : Double.NaN;
                     default -> Double.NaN;
                   };
                   label.setText(Double.isNaN(value) ? "N/A" : String.valueOf(value));

@@ -87,8 +87,8 @@ public class App {
 									new Operation[] { Operation.time_variation,
 											Operation.distance_variation });
 							selectedOp.setVariablesNamesPtbr(new String[] {
-									"Variação de Distância", "Variação de Tempo", "Variação de Distância",
-									"Variação de Tempo"
+									"Tempo Total", "Distância Percorrida", "Distância Restante",
+									"Tempo Restante"
 							});
 							break;
 						case "Exemplo 8 - ":
