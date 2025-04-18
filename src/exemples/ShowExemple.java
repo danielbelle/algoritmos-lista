@@ -152,7 +152,7 @@ public class ShowExemple {
               .addGroup(verticalGroup)
               .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
                   GroupLayout.PREFERRED_SIZE));
-    } else if (numberOfPanel == 1) {
+    } else if (numberOfPanel == 1 && selectedOp.isComplex()) {
       // Painel para exibir a combinação de resultados
       JPanel combinedResultPanel = new JPanel();
       combinedResultPanel.setLayout(new BoxLayout(combinedResultPanel, BoxLayout.Y_AXIS));
