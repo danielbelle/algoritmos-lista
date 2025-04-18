@@ -133,37 +133,43 @@ public class Calculator {
 		return result;
 	}
 
+	// Método auxiliar para arredondar valores
+	private static double roundToTwoDecimalPlaces(double value) {
+		return BigDecimal.valueOf(value)
+				.setScale(2, RoundingMode.HALF_UP)
+				.doubleValue();
+	}
+
 	public static double calculateFormula(String operation, double[] values) {
-		if (operation.equals("weighted_average") || operation.equals("simple_average")
-				|| operation.equals("rent_divide")) {
-			if (values.length > 2) {
-				if (values[2] + values[3] != 0) {
-					return roundToTwoDecimalPlaces(
-							(values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]));
+		switch (operation) {
+			case "weighted_average", "simple_average", "rent_divide" -> {
+				if (values.length > 2) {
+					if (values[2] + values[3] != 0) {
+						return roundToTwoDecimalPlaces(
+								(values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]));
+					} else {
+						throw new ArithmeticException("Division by zero is not allowed.");
+					}
+				} else if (values.length == 2 && operation.equals("rent_divide")) {
+					return roundToTwoDecimalPlaces((values[0] / 11) * values[1]);
+				} else {
+					return roundToTwoDecimalPlaces((values[0] + values[1]) / 2);
+				}
+			}
+			case "full_salary" -> {
+				return roundToTwoDecimalPlaces(values[0] + values[1] * 0.15);
+			}
+			case "distance_variation" -> {
+				return roundToTwoDecimalPlaces(values[0] * values[1]);
+			}
+			default -> {
+				if (values[1] != 0) {
+					return roundToTwoDecimalPlaces(values[0] / values[1]);
 				} else {
 					throw new ArithmeticException("Division by zero is not allowed.");
 				}
-			} else if (values.length == 2 && operation.equals("rent_divide")) {
-				return roundToTwoDecimalPlaces((values[0] / 11) * values[1]);
-			} else {
-				return roundToTwoDecimalPlaces((values[0] + values[1]) / 2);
-			}
-		} else if (operation.equals("full_salary")) {
-			return roundToTwoDecimalPlaces(values[0] + values[1] * 0.15);
-		} else if (operation.equals("distance_variation")) {
-			return roundToTwoDecimalPlaces(values[0] * values[1]);
-		} else {
-			if (values[1] != 0) {
-				return roundToTwoDecimalPlaces(values[0] / values[1]);
-			} else {
-				throw new ArithmeticException("Division by zero is not allowed.");
 			}
 		}
-	}
-
-	private static double roundToTwoDecimalPlaces(double value) {
-		return BigDecimal.valueOf(value).setScale(6, RoundingMode.UP).doubleValue();
-
 	}
 
 	public static Double calculateComplexFormula(
@@ -175,10 +181,12 @@ public class Calculator {
 				|| (savedData.size() < 6 && !exempleName.equals("Exemplo 10 - Aluguel"))) {
 			throw new IllegalArgumentException("Dados insuficientes para o cálculo.");
 		}
+
 		double value = 0.0;
 		String unit = "";
+
 		switch (exempleName) {
-			case "Exemplo 7 - Motorista do Ônibus":
+			case "Exemplo 7 - Motorista do Ônibus" -> {
 				value = switch (index) {
 					case 0 -> savedData.get(2) * 60;
 					case 1 -> savedData.get(5);
@@ -194,11 +202,8 @@ public class Calculator {
 					case 1, 2 -> " km";
 					default -> "";
 				};
-
-				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
-				break;
-
-			case "Exemplo 8 - Metrô":
+			}
+			case "Exemplo 8 - Metrô" -> {
 				value = switch (index) {
 					case 0 -> savedData.get(0) / savedData.get(1);
 					case 1 -> savedData.get(0) / savedData.get(2);
@@ -212,10 +217,8 @@ public class Calculator {
 					case 3 -> " km";
 					default -> "";
 				};
-				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
-				break;
-
-			case "Exemplo 9 - Aeronave":
+			}
+			case "Exemplo 9 - Aeronave" -> {
 				double cruisingDistance = savedData.get(3) - savedData.get(2);
 				double totalTime = savedData.get(1) + cruisingDistance / savedData.get(4);
 				value = switch (index) {
@@ -234,13 +237,11 @@ public class Calculator {
 					case 4 -> " km/h";
 					default -> "";
 				};
-				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
-				break;
-
-			case "Exemplo 10 - Aluguel":
+			}
+			case "Exemplo 10 - Aluguel" -> {
 				value = switch (index) {
 					case 0 -> savedData.get(2);
-					case 1 -> Math.round((savedData.get(2) / savedData.get(0)) * 100 * 100.0) / 100.0;
+					case 1 -> roundToTwoDecimalPlaces((savedData.get(2) / savedData.get(0)) * 100);
 					default -> Double.NaN;
 				};
 
@@ -249,9 +250,10 @@ public class Calculator {
 					case 1 -> " %";
 					default -> "";
 				};
-				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
-				break;
+			}
 		}
+
+		label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
 		return value;
 	}
 }
