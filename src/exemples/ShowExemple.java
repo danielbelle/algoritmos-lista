@@ -37,8 +37,14 @@ public class ShowExemple {
 
     // Loop para criar os painéis dinamicamente
     for (int i = 0; i < numberOfPanel; i++) {
-      Operation currentOp = numberOfPanel > 1 ? listedOperations[i] : selectedOp;
-      panels[i] = simplePanel(currentOp);
+      Operation currentOp;
+      if ("rent_divide".equals(selectedOp.getRelatedOperations()[i].getOperation())) {
+        currentOp = selectedOp.getRelatedOperations()[i];
+        panels[i] = simplePanel(currentOp);
+      } else {
+        currentOp = numberOfPanel > 1 ? listedOperations[i] : selectedOp;
+        panels[i] = simplePanel(currentOp);
+      }
     }
 
     // Configuração do layout horizontal
@@ -74,7 +80,7 @@ public class ShowExemple {
         JPanel variableResultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel variableLabel = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ": ");
         variableLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        JLabel resultValueLabel = new JLabel("0.0"); // Valor inicial
+        JLabel resultValueLabel = new JLabel("0.0");
         resultValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         variableResultPanel.add(variableLabel);
         variableResultPanel.add(resultValueLabel);
@@ -125,7 +131,7 @@ public class ShowExemple {
               "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
           JOptionPane.showMessageDialog(combinedResultPanel,
-              "Ocorreu um erro. Verifique os números de entrada e tente novamente.",
+              "Por favor, insira números válidos e certifique-se de calcular os resultados individuais antes de calcular a combinação.",
               "Erro", JOptionPane.ERROR_MESSAGE);
         }
       });
@@ -142,9 +148,91 @@ public class ShowExemple {
               .addGroup(verticalGroup)
               .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
                   GroupLayout.PREFERRED_SIZE));
-    } else
+    } else if (numberOfPanel == 1) {
+      // Painel para exibir a combinação de resultados
+      JPanel combinedResultPanel = new JPanel();
+      combinedResultPanel.setLayout(new BoxLayout(combinedResultPanel, BoxLayout.Y_AXIS));
+      combinedResultPanel.setBorder(BorderFactory.createTitledBorder(
+          BorderFactory.createCompoundBorder(
+              BorderFactory.createLineBorder(Color.BLACK),
+              BorderFactory.createEmptyBorder(5, 5, 5, 5)),
+          "Combinação de Resultados"));
+      combinedResultPanel.setPreferredSize(new Dimension(350, 200));
 
-    {
+      for (int i = 0; i < selectedOp.getVariablesNamesPtbr().length; i++) {
+        JPanel variableResultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel variableLabel = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ": ");
+        variableLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        JLabel resultValueLabel = new JLabel("0.0");
+        resultValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        variableResultPanel.add(variableLabel);
+        variableResultPanel.add(resultValueLabel);
+        combinedResultPanel.add(variableResultPanel);
+      }
+
+      JButton calculateCombinedButton = new JButton("Calcular Combinação");
+      combinedResultPanel.add(calculateCombinedButton);
+
+      // Ação do botão "Calcular Combinação"
+      calculateCombinedButton.addActionListener(e -> {
+        try {
+          java.util.List<Double> savedData = new java.util.ArrayList<>();
+
+          // Itera sobre os painéis para acessar os valores de inputFields[] e resultLabel
+          for (JPanel panel : panels) {
+            JPanel inputPanel = (JPanel) panel.getComponent(0); // Assume que o inputPanel é o primeiro componente
+            for (Component component : inputPanel.getComponents()) {
+              if (component instanceof JTextField) {
+                String inputText = ((JTextField) component).getText().trim();
+                if (!inputText.isEmpty()) {
+                  savedData.add(Double.parseDouble(inputText));
+                }
+              }
+            }
+            JLabel resultLabel = (JLabel) panel.getComponent(panel.getComponentCount() - 1); // Último componente
+            String resultText = resultLabel.getText().replaceAll("[^0-9.]", "").trim();
+            if (!resultText.isEmpty()) {
+              savedData.add(Double.parseDouble(resultText));
+            }
+          }
+
+          int index = 0; // Initialize index to track the component position
+          for (Component component : combinedResultPanel.getComponents()) {
+            if (component instanceof JPanel variableResultPanel) {
+              for (Component subComponent : variableResultPanel.getComponents()) {
+                if (subComponent instanceof JLabel label && "0.0".equals(label.getText())) {
+                  Calculator.calculateComplexFormula(index, savedData, label, selectedOp.getVariables()[0]);
+                }
+              }
+              index++; // Increment index for each variableResultPanel
+            }
+          }
+
+        } catch (NumberFormatException ex) {
+          JOptionPane.showMessageDialog(combinedResultPanel,
+              "Por favor, insira números válidos e certifique-se de calcular os resultados individuais antes de calcular a combinação.",
+              "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+          JOptionPane.showMessageDialog(combinedResultPanel,
+              "Por favor, insira números válidos e certifique-se de calcular os resultados individuais antes de calcular a combinação.",
+              "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+      });
+
+      // Adiciona o painel de combinação ao layout
+      layout.setHorizontalGroup(
+          layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+              .addGroup(horizontalGroup)
+              .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                  GroupLayout.PREFERRED_SIZE));
+
+      layout.setVerticalGroup(
+          layout.createSequentialGroup()
+              .addGroup(verticalGroup)
+              .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                  GroupLayout.PREFERRED_SIZE));
+
+    } else {
       layout.setVerticalGroup(
           layout.createSequentialGroup()
               .addGroup(verticalGroup));

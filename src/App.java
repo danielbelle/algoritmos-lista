@@ -30,7 +30,7 @@ public class App {
 				"Exemplo 7 - Motorista do Ônibus",
 				"Exemplo 8 - Metrô",
 				"Exemplo 9 - Aeronave",
-				"Exemplo 10 - ",
+				"Exemplo 10 - Aluguel",
 				"Exemplo 11 - ",
 
 		};
@@ -66,21 +66,27 @@ public class App {
 						case "Exemplo 1 - Média Aritmética Simples":
 							selectedOp = Operation.simple_average;
 							break;
+
 						case "Exemplo 2 - Média Aritmética Ponderada":
 							selectedOp = Operation.weighted_average;
 							break;
+
 						case "Exemplo 3 - Salário Final":
 							selectedOp = Operation.full_salary;
 							break;
+
 						case "Exemplo 4 - Velocidade Média":
 							selectedOp = Operation.average_speed;
 							break;
+
 						case "Exemplo 5 - Variação de Tempo":
 							selectedOp = Operation.time_variation;
 							break;
+
 						case "Exemplo 6 - Variação de Distância":
 							selectedOp = Operation.distance_variation;
 							break;
+
 						case "Exemplo 7 - Motorista do Ônibus":
 							selectedOp = Operation.complex_problem;
 							selectedOp.setRelatedOperations(
@@ -93,6 +99,7 @@ public class App {
 							selectedOp.setVariables(new String[] {
 									"Exemplo 7 - Motorista do Ônibus" });
 							break;
+
 						case "Exemplo 8 - Metrô":
 							selectedOp = Operation.complex_problem;
 							selectedOp.setRelatedOperations(
@@ -104,6 +111,7 @@ public class App {
 							selectedOp.setVariables(new String[] {
 									"Exemplo 8 - Metrô" });
 							break;
+
 						case "Exemplo 9 - Aeronave":
 							selectedOp = Operation.complex_problem;
 							selectedOp.setRelatedOperations(
@@ -116,12 +124,18 @@ public class App {
 							selectedOp.setVariables(new String[] {
 									"Exemplo 9 - Aeronave" });
 							break;
-						case "Exemplo 10 - ":
+
+						case "Exemplo 10 - Aluguel":
 							selectedOp = Operation.complex_problem;
 							selectedOp.setRelatedOperations(
-									new Operation[] { Operation.time_variation,
-											Operation.distance_variation });
+									new Operation[] { Operation.rent_divide });
+							selectedOp.setVariablesNamesPtbr(new String[] {
+									"Valor do Aluguel em R$", "Percentual Salário Aluguel"
+							});
+							selectedOp.setVariables(new String[] {
+									"Exemplo 10 - Aluguel" });
 							break;
+
 						case "Exemplo 11 - ":
 							selectedOp = Operation.complex_problem;
 							selectedOp.setRelatedOperations(

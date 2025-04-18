@@ -21,7 +21,7 @@ public class Calculator {
 				false, null),
 		full_salary("full_salary", "Salário Final",
 				new String[] { "salary", "salesTotal" },
-				new String[] { "Salario", "Total de Vendas" },
+				new String[] { "Salário", "Total de Vendas" },
 				false, null),
 		average_speed("average_speed", "Velocidade Média",
 				new String[] { "distVariation", "timeVariation" },
@@ -34,6 +34,10 @@ public class Calculator {
 		distance_variation("distance_variation", "Variação de Distância",
 				new String[] { "averageVelocity", "timeVariation" },
 				new String[] { "Velocidade Média", "Variação de Tempo" },
+				false, null),
+		rent_divide("rent_divide", "Aluguel",
+				new String[] { "salary", "rentParts" },
+				new String[] { "Salário", "Aluguel" },
 				false, null),
 		complex_problem("complex_problem", "Problema Complexo",
 				null,
@@ -128,17 +132,22 @@ public class Calculator {
 	}
 
 	public static double calculateFormula(String operation, double[] values) {
-		if (operation.equals("weighted_average") || operation.equals("simple_average")) {
+		if (operation.equals("weighted_average") || operation.equals("simple_average")
+				|| operation.equals("rent_divide")) {
 			if (values.length > 2) {
 				if (values[2] + values[3] != 0) {
 					return (values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]);
 				} else {
 					throw new ArithmeticException("Division by zero is not allowed.");
 				}
+			} else if (values.length == 2 && operation.equals("rent_divide")) {
+				return (values[0] / 11) * values[1];
 			} else {
 				return (values[0] + values[1]) / 2;
 			}
-		} else if (operation.equals("full_salary")) {
+		} else if (operation.equals("full_salary"))
+
+		{
 			return values[0] + values[1] * (0.15);
 		} else if (operation.equals("distance_variation")) {
 			return (values[0] * values[1]);
@@ -151,9 +160,13 @@ public class Calculator {
 		}
 	}
 
-	public static Double calculateComplexFormula(int index, java.util.List<Double> savedData, JLabel label,
+	public static Double calculateComplexFormula(
+			int index,
+			java.util.List<Double> savedData,
+			JLabel label,
 			String exempleName) {
-		if (savedData == null || savedData.size() < 6) {
+		if (savedData == null
+				|| (savedData.size() < 6 && exempleName != "Exemplo 10 - Aluguel")) {
 			throw new IllegalArgumentException("Dados insuficientes para o cálculo.");
 		}
 		double value = 0.0;
@@ -213,6 +226,21 @@ public class Calculator {
 					case 0, 3, 5 -> " horas";
 					case 1, 2 -> " km";
 					case 4 -> " km/h";
+					default -> "";
+				};
+				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+				break;
+			case "Exemplo 10 - Aluguel":
+				// "Valor do Aluguel em R$", "Percentual do Salário é o Aluguel",
+				value = switch (index) {
+					case 0 -> savedData.get(2);
+					case 1 -> Math.round((savedData.get(2) / savedData.get(0)) * 100);
+					default -> Double.NaN;
+				};
+
+				unit = switch (index) {
+					case 0 -> " Reais por mês";
+					case 1 -> " %";
 					default -> "";
 				};
 				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
