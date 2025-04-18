@@ -38,12 +38,16 @@ public class ShowExemple {
     // Loop para criar os painéis dinamicamente
     for (int i = 0; i < numberOfPanel; i++) {
       Operation currentOp;
-      if ("rent_divide".equals(selectedOp.getRelatedOperations()[i].getOperation())) {
+      if (selectedOp.getRelatedOperations() != null
+          && "rent_divide".equals(selectedOp.getRelatedOperations()[i].getOperation())) {
         currentOp = selectedOp.getRelatedOperations()[i];
         panels[i] = simplePanel(currentOp);
-      } else {
+      } else if (numberOfPanel > 1) {
         currentOp = numberOfPanel > 1 ? listedOperations[i] : selectedOp;
         panels[i] = simplePanel(currentOp);
+      } else {
+        panels[i] = simplePanel(selectedOp);
+
       }
     }
 
