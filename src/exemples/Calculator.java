@@ -157,25 +157,25 @@ public class Calculator {
 			throw new IllegalArgumentException("Dados insuficientes para o cálculo.");
 		}
 		double value = 0.0;
+		String unit = "";
 		switch (exempleName) {
 			case "Exemplo 7 - Motorista do Ônibus":
 				value = switch (index) {
-					case 0 -> savedData.get(2) * 60; // Exemplo: converte para minutos
-					case 1 -> savedData.get(5); // Exemplo: retorna um valor específico
-					case 2 -> Math.abs(savedData.get(5) - savedData.get(0)); // Exemplo: diferença absoluta
+					case 0 -> savedData.get(2) * 60;
+					case 1 -> savedData.get(5);
+					case 2 -> Math.abs(savedData.get(5) - savedData.get(0));
 					case 3 -> savedData.get(1) != 0
-							? Math.abs(savedData.get(5) - savedData.get(0)) * 60 / savedData.get(1) // Exemplo: cálculo com
-							// div
-							: Double.NaN; // Evita divisão por zero
-					default -> Double.NaN; // Caso padrão
+							? Math.abs(savedData.get(5) - savedData.get(0)) * 60 / savedData.get(1)
+							: Double.NaN;
+					default -> Double.NaN;
 				};
 
-				String unit = switch (index) {
-					case 0, 3 -> " minutos"; // Unidades para os índices 0 e 3
-					case 1, 2 -> " quilômetros"; // Unidades para os índices 1 e 2
-					default -> ""; // Sem unidade para outros casos
+				unit = switch (index) {
+					case 0, 3 -> " minutos";
+					case 1, 2 -> " km";
+					default -> "";
 				};
-				// Atualiza o rótulo com o valor calculado
+
 				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
 
 			case "Exemplo 8 - Metrô":
@@ -184,17 +184,38 @@ public class Calculator {
 					case 1 -> savedData.get(0) / savedData.get(2);
 					case 2 -> Math.abs((savedData.get(0) / savedData.get(1)) - (savedData.get(0) / savedData.get(2)));
 					case 3 -> (savedData.get(0) / savedData.get(1)) * savedData.get(2);
-					default -> Double.NaN; // Caso padrão
+					default -> Double.NaN;
 				};
 
-				String unit2 = switch (index) {
-					case 0, 1, 2 -> " horas"; // Unidades para os índices 0 e 3
-					case 3 -> " quilômetros"; // Unidades para os índices 1 e 2
-					default -> ""; // Sem unidade para outros casos
+				unit = switch (index) {
+					case 0, 1, 2 -> " horas";
+					case 3 -> " km";
+					default -> "";
 				};
-				// Atualiza o rótulo com o valor calculado
-				label.setText(Double.isNaN(value) ? "N/A" : value + unit2);
+				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+				break;
+			case "Exemplo 9 - Aeronave":
+				double cruisingDistance = savedData.get(3) - savedData.get(2);
+				double totalTime = savedData.get(1) + cruisingDistance / savedData.get(4);
+				// "Tempo Total", "Distância Piloto Automático", "Distância de Cruzeiro","Tempo
+				// de Cruzeiro", "Velocidade de Cruzeiro", "Tempo 100% Automático"
+				value = switch (index) {
+					case 0 -> totalTime;
+					case 1 -> savedData.get(2);
+					case 2 -> cruisingDistance;
+					case 3 -> cruisingDistance / savedData.get(4);
+					case 4 -> savedData.get(4);
+					case 5 -> savedData.get(3) / savedData.get(0);
+					default -> Double.NaN;
+				};
 
+				unit = switch (index) {
+					case 0, 3, 5 -> " horas";
+					case 1, 2 -> " km";
+					case 4 -> " km/h";
+					default -> "";
+				};
+				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
 				break;
 		}
 		return value;
