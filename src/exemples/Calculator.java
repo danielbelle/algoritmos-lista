@@ -1,6 +1,8 @@
 package exemples;
 
 import javax.swing.JLabel;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Calculator {
 	private static String choice;
@@ -136,28 +138,32 @@ public class Calculator {
 				|| operation.equals("rent_divide")) {
 			if (values.length > 2) {
 				if (values[2] + values[3] != 0) {
-					return (values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]);
+					return roundToTwoDecimalPlaces(
+							(values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]));
 				} else {
 					throw new ArithmeticException("Division by zero is not allowed.");
 				}
 			} else if (values.length == 2 && operation.equals("rent_divide")) {
-				return (values[0] / 11) * values[1];
+				return roundToTwoDecimalPlaces((values[0] / 11) * values[1]);
 			} else {
-				return (values[0] + values[1]) / 2;
+				return roundToTwoDecimalPlaces((values[0] + values[1]) / 2);
 			}
-		} else if (operation.equals("full_salary"))
-
-		{
-			return values[0] + values[1] * (0.15);
+		} else if (operation.equals("full_salary")) {
+			return roundToTwoDecimalPlaces(values[0] + values[1] * 0.15);
 		} else if (operation.equals("distance_variation")) {
-			return (values[0] * values[1]);
+			return roundToTwoDecimalPlaces(values[0] * values[1]);
 		} else {
 			if (values[1] != 0) {
-				return (values[0] / values[1]);
+				return roundToTwoDecimalPlaces(values[0] / values[1]);
 			} else {
 				throw new ArithmeticException("Division by zero is not allowed.");
 			}
 		}
+	}
+
+	private static double roundToTwoDecimalPlaces(double value) {
+		return BigDecimal.valueOf(value).setScale(6, RoundingMode.UP).doubleValue();
+
 	}
 
 	public static Double calculateComplexFormula(
@@ -166,7 +172,7 @@ public class Calculator {
 			JLabel label,
 			String exempleName) {
 		if (savedData == null
-				|| (savedData.size() < 6 && exempleName != "Exemplo 10 - Aluguel")) {
+				|| (savedData.size() < 6 && !exempleName.equals("Exemplo 10 - Aluguel"))) {
 			throw new IllegalArgumentException("Dados insuficientes para o cálculo.");
 		}
 		double value = 0.0;
@@ -189,7 +195,8 @@ public class Calculator {
 					default -> "";
 				};
 
-				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
+				break;
 
 			case "Exemplo 8 - Metrô":
 				value = switch (index) {
@@ -205,13 +212,12 @@ public class Calculator {
 					case 3 -> " km";
 					default -> "";
 				};
-				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
 				break;
+
 			case "Exemplo 9 - Aeronave":
 				double cruisingDistance = savedData.get(3) - savedData.get(2);
 				double totalTime = savedData.get(1) + cruisingDistance / savedData.get(4);
-				// "Tempo Total", "Distância Piloto Automático", "Distância de Cruzeiro","Tempo
-				// de Cruzeiro", "Velocidade de Cruzeiro", "Tempo 100% Automático"
 				value = switch (index) {
 					case 0 -> totalTime;
 					case 1 -> savedData.get(2);
@@ -228,13 +234,13 @@ public class Calculator {
 					case 4 -> " km/h";
 					default -> "";
 				};
-				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
 				break;
+
 			case "Exemplo 10 - Aluguel":
-				// "Valor do Aluguel em R$", "Percentual do Salário é o Aluguel",
 				value = switch (index) {
 					case 0 -> savedData.get(2);
-					case 1 -> Math.round((savedData.get(2) / savedData.get(0)) * 100);
+					case 1 -> Math.round((savedData.get(2) / savedData.get(0)) * 100 * 100.0) / 100.0;
 					default -> Double.NaN;
 				};
 
@@ -243,7 +249,7 @@ public class Calculator {
 					case 1 -> " %";
 					default -> "";
 				};
-				label.setText(Double.isNaN(value) ? "N/A" : value + unit);
+				label.setText(Double.isNaN(value) ? "N/A" : String.format("%.2f", value) + unit);
 				break;
 		}
 		return value;

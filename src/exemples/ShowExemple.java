@@ -37,18 +37,11 @@ public class ShowExemple {
 
     // Loop para criar os painéis dinamicamente
     for (int i = 0; i < numberOfPanel; i++) {
-      Operation currentOp;
-      if (selectedOp.getRelatedOperations() != null
-          && "rent_divide".equals(selectedOp.getRelatedOperations()[i].getOperation())) {
-        currentOp = selectedOp.getRelatedOperations()[i];
-        panels[i] = simplePanel(currentOp);
-      } else if (numberOfPanel > 1) {
-        currentOp = numberOfPanel > 1 ? listedOperations[i] : selectedOp;
-        panels[i] = simplePanel(currentOp);
-      } else {
-        panels[i] = simplePanel(selectedOp);
-
-      }
+      Operation currentOp = (selectedOp.getRelatedOperations() != null
+          && "rent_divide".equals(selectedOp.getRelatedOperations()[i].getOperation()))
+              ? selectedOp.getRelatedOperations()[i]
+              : (numberOfPanel > 1 ? listedOperations[i] : selectedOp);
+      panels[i] = simplePanel(currentOp);
     }
 
     // Configuração do layout horizontal
@@ -69,7 +62,7 @@ public class ShowExemple {
     }
 
     // Adiciona o painel de combinação de resultados apenas se numberOfPanel > 1
-    if (numberOfPanel > 1) {
+    if (numberOfPanel > 1 || (numberOfPanel == 1 && selectedOp.isComplex())) {
       // Painel para exibir a combinação de resultados
       JPanel combinedResultPanel = new JPanel();
       combinedResultPanel.setLayout(new BoxLayout(combinedResultPanel, BoxLayout.Y_AXIS));
@@ -78,11 +71,11 @@ public class ShowExemple {
               BorderFactory.createLineBorder(Color.BLACK),
               BorderFactory.createEmptyBorder(5, 5, 5, 5)),
           "Combinação de Resultados"));
-      combinedResultPanel.setPreferredSize(new Dimension(350, 200));
+      combinedResultPanel.setPreferredSize(new Dimension(350, 230));
 
-      for (int i = 0; i < selectedOp.getVariablesNamesPtbr().length; i++) {
+      for (String variableName : selectedOp.getVariablesNamesPtbr()) {
         JPanel variableResultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel variableLabel = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ": ");
+        JLabel variableLabel = new JLabel(variableName + ": ");
         variableLabel.setFont(new Font("Arial", Font.BOLD, 12));
         JLabel resultValueLabel = new JLabel("0.0");
         resultValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -94,6 +87,10 @@ public class ShowExemple {
       JButton calculateCombinedButton = new JButton("Calcular Combinação");
       combinedResultPanel.add(calculateCombinedButton);
 
+      // Botão para limpar os rótulos que não estão em negrito
+      JButton clearNonBoldLabelsButton = new JButton("Limpar");
+      combinedResultPanel.add(clearNonBoldLabelsButton);
+
       // Ação do botão "Calcular Combinação"
       calculateCombinedButton.addActionListener(e -> {
         try {
@@ -103,8 +100,8 @@ public class ShowExemple {
           for (JPanel panel : panels) {
             JPanel inputPanel = (JPanel) panel.getComponent(0); // Assume que o inputPanel é o primeiro componente
             for (Component component : inputPanel.getComponents()) {
-              if (component instanceof JTextField) {
-                String inputText = ((JTextField) component).getText().trim();
+              if (component instanceof JTextField textField) {
+                String inputText = textField.getText().trim();
                 if (!inputText.isEmpty()) {
                   savedData.add(Double.parseDouble(inputText));
                 }
@@ -117,98 +114,14 @@ public class ShowExemple {
             }
           }
 
-          // Atualiza os valores no painel de combinação de resultados
-          Component[] combinedResultComponents = combinedResultPanel.getComponents();
-          for (int index = 0; index < combinedResultComponents.length; index++) {
-            if (combinedResultComponents[index] instanceof JPanel variableResultPanel) {
-              for (Component subComponent : variableResultPanel.getComponents()) {
-                if (subComponent instanceof JLabel label && !label.getFont().isBold()) {
-                  Calculator.calculateComplexFormula(index, savedData, label, selectedOp.getVariables()[0]);
-                }
-              }
-            }
-          }
-
-        } catch (NumberFormatException ex) {
-          JOptionPane.showMessageDialog(combinedResultPanel,
-              "Por favor, insira números válidos e certifique-se de calcular os resultados individuais antes de calcular a combinação.",
-              "Erro", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-          JOptionPane.showMessageDialog(combinedResultPanel,
-              "Por favor, insira números válidos e certifique-se de calcular os resultados individuais antes de calcular a combinação.",
-              "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-      });
-
-      // Adiciona o painel de combinação ao layout
-      layout.setHorizontalGroup(
-          layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-              .addGroup(horizontalGroup)
-              .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                  GroupLayout.PREFERRED_SIZE));
-
-      layout.setVerticalGroup(
-          layout.createSequentialGroup()
-              .addGroup(verticalGroup)
-              .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                  GroupLayout.PREFERRED_SIZE));
-    } else if (numberOfPanel == 1 && selectedOp.isComplex()) {
-      // Painel para exibir a combinação de resultados
-      JPanel combinedResultPanel = new JPanel();
-      combinedResultPanel.setLayout(new BoxLayout(combinedResultPanel, BoxLayout.Y_AXIS));
-      combinedResultPanel.setBorder(BorderFactory.createTitledBorder(
-          BorderFactory.createCompoundBorder(
-              BorderFactory.createLineBorder(Color.BLACK),
-              BorderFactory.createEmptyBorder(5, 5, 5, 5)),
-          "Combinação de Resultados"));
-      combinedResultPanel.setPreferredSize(new Dimension(350, 200));
-
-      for (int i = 0; i < selectedOp.getVariablesNamesPtbr().length; i++) {
-        JPanel variableResultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel variableLabel = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ": ");
-        variableLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        JLabel resultValueLabel = new JLabel("0.0");
-        resultValueLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        variableResultPanel.add(variableLabel);
-        variableResultPanel.add(resultValueLabel);
-        combinedResultPanel.add(variableResultPanel);
-      }
-
-      JButton calculateCombinedButton = new JButton("Calcular Combinação");
-      combinedResultPanel.add(calculateCombinedButton);
-
-      // Ação do botão "Calcular Combinação"
-      calculateCombinedButton.addActionListener(e -> {
-        try {
-          java.util.List<Double> savedData = new java.util.ArrayList<>();
-
-          // Itera sobre os painéis para acessar os valores de inputFields[] e resultLabel
-          for (JPanel panel : panels) {
-            JPanel inputPanel = (JPanel) panel.getComponent(0); // Assume que o inputPanel é o primeiro componente
-            for (Component component : inputPanel.getComponents()) {
-              if (component instanceof JTextField) {
-                String inputText = ((JTextField) component).getText().trim();
-                if (!inputText.isEmpty()) {
-                  savedData.add(Double.parseDouble(inputText));
-                }
-              }
-            }
-            JLabel resultLabel = (JLabel) panel.getComponent(panel.getComponentCount() - 1); // Último componente
-            String resultText = resultLabel.getText().replaceAll("[^0-9.]", "").trim();
-            if (!resultText.isEmpty()) {
-              savedData.add(Double.parseDouble(resultText));
-            }
-          }
-
-          int index = 0; // Initialize index to track the component position
+          int index = 0;
           for (Component component : combinedResultPanel.getComponents()) {
             if (component instanceof JPanel variableResultPanel) {
               for (Component subComponent : variableResultPanel.getComponents()) {
                 if (subComponent instanceof JLabel label && "0.0".equals(label.getText())) {
-                  Calculator.calculateComplexFormula(index, savedData, label, selectedOp.getVariables()[0]);
+                  Calculator.calculateComplexFormula(index++, savedData, label, selectedOp.getVariables()[0]);
                 }
               }
-              index++; // Increment index for each variableResultPanel
             }
           }
 
@@ -218,8 +131,24 @@ public class ShowExemple {
               "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
           JOptionPane.showMessageDialog(combinedResultPanel,
-              "Por favor, insira números válidos e certifique-se de calcular os resultados individuais antes de calcular a combinação.",
+              "Erro ao calcular a combinação: " + ex.getMessage(),
               "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+      });
+
+      // Ação do botão "Limpar Rótulos Não Negrito"
+      clearNonBoldLabelsButton.addActionListener(e -> {
+        for (Component component : combinedResultPanel.getComponents()) {
+          if (component instanceof JPanel variableResultPanel) {
+            for (Component subComponent : variableResultPanel.getComponents()) {
+              if (subComponent instanceof JLabel label) {
+                // Verifica se o rótulo não está em negrito
+                if (label.getFont().getStyle() != Font.BOLD) {
+                  label.setText("0.0"); // Redefine o texto para "0.0"
+                }
+              }
+            }
+          }
         }
       });
 
@@ -235,7 +164,6 @@ public class ShowExemple {
               .addGroup(verticalGroup)
               .addComponent(combinedResultPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
                   GroupLayout.PREFERRED_SIZE));
-
     } else {
       layout.setVerticalGroup(
           layout.createSequentialGroup()
