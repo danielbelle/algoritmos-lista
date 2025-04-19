@@ -31,7 +31,7 @@ public class App {
 				"Exemplo 8 - Metrô",
 				"Exemplo 9 - Aeronave",
 				"Exemplo 10 - Aluguel",
-				"Exemplo 11 - ",
+				"Exemplo 11 - Preço por kg",
 
 		};
 
@@ -136,11 +136,8 @@ public class App {
 									"Exemplo 10 - Aluguel" });
 							break;
 
-						case "Exemplo 11 - ":
-							selectedOp = Operation.complex_problem;
-							selectedOp.setRelatedOperations(
-									new Operation[] { Operation.time_variation,
-											Operation.distance_variation });
+						case "Exemplo 11 - Preço por kg":
+							selectedOp = Operation.kg_price;
 							break;
 
 						default:

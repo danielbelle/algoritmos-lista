@@ -41,6 +41,9 @@ public class Calculator {
 				new String[] { "salary", "rentParts" },
 				new String[] { "Salário", "Aluguel" },
 				false, null),
+		kg_price("kg_price", "Preço por Quilograma",
+				new String[] { "totalPrice", "totalWeight" },
+				new String[] { "Preço Pago", "Peso" }, false, null),
 		complex_problem("complex_problem", "Problema Complexo",
 				null,
 				new String[] {}, true,
@@ -191,7 +194,7 @@ public class Calculator {
 					case 0 -> savedData.get(2) * 60;
 					case 1 -> savedData.get(5);
 					case 2 -> Math.abs(savedData.get(5) - savedData.get(0));
-					case 3 -> savedData.get(1) != 0
+					case 3 -> (savedData.get(1) != 0 && savedData.get(5) != 0)
 							? Math.abs(savedData.get(5) - savedData.get(0)) * 60 / savedData.get(1)
 							: Double.NaN;
 					default -> Double.NaN;
@@ -205,10 +208,13 @@ public class Calculator {
 			}
 			case "Exemplo 8 - Metrô" -> {
 				value = switch (index) {
-					case 0 -> savedData.get(0) / savedData.get(1);
-					case 1 -> savedData.get(0) / savedData.get(2);
-					case 2 -> Math.abs((savedData.get(0) / savedData.get(1)) - (savedData.get(0) / savedData.get(2)));
-					case 3 -> (savedData.get(0) / savedData.get(1)) * savedData.get(2);
+					case 0 -> savedData.get(1) != 0 ? savedData.get(0) / savedData.get(1) : Double.NaN;
+					case 1 -> savedData.get(2) != 0 ? savedData.get(0) / savedData.get(2) : Double.NaN;
+					case 2 -> (savedData.get(1) != 0 && savedData.get(2) != 0)
+							? Math.abs((savedData.get(0) / savedData.get(1)) - (savedData.get(0) / savedData.get(2)))
+							: Double.NaN;
+					case 3 ->
+						savedData.get(1) != 0 ? (savedData.get(0) / savedData.get(1)) * savedData.get(2) : Double.NaN;
 					default -> Double.NaN;
 				};
 
@@ -220,14 +226,20 @@ public class Calculator {
 			}
 			case "Exemplo 9 - Aeronave" -> {
 				double cruisingDistance = savedData.get(3) - savedData.get(2);
-				double totalTime = savedData.get(1) + cruisingDistance / savedData.get(4);
+				double totalTime = savedData.get(4) != 0
+						? savedData.get(1) + cruisingDistance / savedData.get(4)
+						: Double.NaN;
 				value = switch (index) {
 					case 0 -> totalTime;
 					case 1 -> savedData.get(2);
 					case 2 -> cruisingDistance;
-					case 3 -> cruisingDistance / savedData.get(4);
+					case 3 -> savedData.get(4) != 0
+							? cruisingDistance / savedData.get(4)
+							: Double.NaN;
 					case 4 -> savedData.get(4);
-					case 5 -> savedData.get(3) / savedData.get(0);
+					case 5 -> savedData.get(0) != 0
+							? savedData.get(3) / savedData.get(0)
+							: Double.NaN;
 					default -> Double.NaN;
 				};
 
@@ -241,7 +253,9 @@ public class Calculator {
 			case "Exemplo 10 - Aluguel" -> {
 				value = switch (index) {
 					case 0 -> savedData.get(2);
-					case 1 -> roundToTwoDecimalPlaces((savedData.get(2) / savedData.get(0)) * 100);
+					case 1 -> savedData.get(0) != 0
+							? roundToTwoDecimalPlaces((savedData.get(2) / savedData.get(0)) * 100)
+							: Double.NaN;
 					default -> Double.NaN;
 				};
 
