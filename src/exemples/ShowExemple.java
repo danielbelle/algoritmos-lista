@@ -210,7 +210,7 @@ public class ShowExemple {
     panel.add(buttonPanel);
 
     // Rótulo de resultado
-    JLabel resultLabel = new JLabel("Resultado: ");
+    JLabel resultLabel = new JLabel(currentOp.getOperationPtbr() + ": ");
     resultLabel.setFont(new Font("Arial", Font.BOLD, 12));
     panel.add(resultLabel);
 
@@ -226,7 +226,7 @@ public class ShowExemple {
 
           // Chama o método de cálculo do Calculator
           double result = Calculator.calculateFormula(currentOp.getOperation(), values);
-          resultLabel.setText("Resultado: " + result);
+          resultLabel.setText(currentOp.getOperationPtbr() + ": " + result);
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(panel, "Por favor, insira números válidos.", "Erro",
               JOptionPane.ERROR_MESSAGE);
@@ -243,7 +243,7 @@ public class ShowExemple {
         for (JTextField field : inputFields) {
           field.setText("");
         }
-        resultLabel.setText("Resultado: ");
+        resultLabel.setText(currentOp.getOperationPtbr() + ": ");
       }
     });
 

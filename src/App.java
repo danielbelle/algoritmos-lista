@@ -142,6 +142,7 @@ public class App {
 							});
 							selectedOp.setVariables(new String[] {
 									"Exemplo 10 - Aluguel" });
+							selectedOp.setSimplePanelNamesInput(null);
 							break;
 
 						case "Exemplo 11 - Preço por kg":

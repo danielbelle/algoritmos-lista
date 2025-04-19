@@ -155,38 +155,30 @@ public class Calculator {
 		return result;
 	}
 
-	// Método auxiliar para arredondar valores
-	private static double roundToTwoDecimalPlaces(double value) {
-		return BigDecimal.valueOf(value)
-				.setScale(2, RoundingMode.HALF_UP)
-				.doubleValue();
-	}
-
 	public static double calculateFormula(String operation, double[] values) {
 		switch (operation) {
 			case "weighted_average", "simple_average", "rent_divide" -> {
 				if (values.length > 2) {
 					if (values[2] + values[3] != 0) {
-						return roundToTwoDecimalPlaces(
-								(values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]));
+						return (values[0] * values[2] + values[1] * values[3]) / (values[2] + values[3]);
 					} else {
 						throw new ArithmeticException("Division by zero is not allowed.");
 					}
 				} else if (values.length == 2 && operation.equals("rent_divide")) {
-					return roundToTwoDecimalPlaces((values[0] / 11) * values[1]);
+					return (values[0] / 11) * values[1];
 				} else {
-					return roundToTwoDecimalPlaces((values[0] + values[1]) / 2);
+					return (values[0] + values[1]) / 2;
 				}
 			}
 			case "full_salary" -> {
-				return roundToTwoDecimalPlaces(values[0] + values[1] * 0.15);
+				return values[0] + values[1] * 0.15;
 			}
 			case "distance_variation" -> {
-				return roundToTwoDecimalPlaces(values[0] * values[1]);
+				return values[0] * values[1];
 			}
 			default -> {
 				if (values[1] != 0) {
-					return roundToTwoDecimalPlaces(values[0] / values[1]);
+					return values[0] / values[1];
 				} else {
 					throw new ArithmeticException("Division by zero is not allowed.");
 				}
@@ -273,7 +265,7 @@ public class Calculator {
 				value = switch (index) {
 					case 0 -> savedData.get(2);
 					case 1 -> savedData.get(0) != 0
-							? roundToTwoDecimalPlaces((savedData.get(2) / savedData.get(0)) * 100)
+							? (savedData.get(2) / savedData.get(0)) * 100
 							: Double.NaN;
 					default -> Double.NaN;
 				};
