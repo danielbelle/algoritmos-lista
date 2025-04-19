@@ -98,6 +98,9 @@ public class App {
 							});
 							selectedOp.setVariables(new String[] {
 									"Exemplo 7 - Motorista do Ônibus" });
+							selectedOp.setSimplePanelNamesInput(new String[] {
+									"Distância Total", "Velocidade Média Prevista", "Velocidade Média Prevista",
+									"Intervalo de Tempo" });
 							break;
 
 						case "Exemplo 8 - Metrô":
@@ -110,6 +113,8 @@ public class App {
 							});
 							selectedOp.setVariables(new String[] {
 									"Exemplo 8 - Metrô" });
+							selectedOp.setSimplePanelNamesInput(new String[] {
+									"Extensão Total", "Velocidade Média Padrão", "Extensão Total", "Velocidade Média Ajustada" });
 							break;
 
 						case "Exemplo 9 - Aeronave":
@@ -123,6 +128,9 @@ public class App {
 							});
 							selectedOp.setVariables(new String[] {
 									"Exemplo 9 - Aeronave" });
+							selectedOp.setSimplePanelNamesInput(new String[] {
+									"Velocidade Piloto Automático", "Tempo Piloto Automático", "Distância Total",
+									"Tempo de Cruzeiro" });
 							break;
 
 						case "Exemplo 10 - Aluguel":

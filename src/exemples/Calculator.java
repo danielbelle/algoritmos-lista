@@ -16,38 +16,46 @@ public class Calculator {
 		simple_average("simple_average", "Média Aritmética Simples",
 				new String[] { "value1", "value2" },
 				new String[] { "Valor 1", "Valor 2" },
-				false, null),
+				false, null, null),
 		weighted_average("weighted_average", "Média Aritmética Ponderada",
 				new String[] { "value1", "value2", "weight1", "weight2" },
-				new String[] { "Valor 1", "Valor 2", "Peso 1", "Peso 2" },
-				false, null),
+				new String[] { "Valor 1", "Valor 2", "Peso 1", "Peso 2"
+				},
+				false, null,
+				null),
 		full_salary("full_salary", "Salário Final",
 				new String[] { "salary", "salesTotal" },
 				new String[] { "Salário", "Total de Vendas" },
-				false, null),
+				false, null,
+				null),
 		average_speed("average_speed", "Velocidade Média",
 				new String[] { "distVariation", "timeVariation" },
 				new String[] { "Variação de Distância", "Variação de Tempo" },
-				false, null),
+				false, null,
+				null),
 		time_variation("time_variation", "Variação de Tempo",
 				new String[] { "distVariation", "averageVelocity" },
 				new String[] { "Variação de Distância", "Velocidade Média" },
-				false, null),
+				false, null,
+				null),
 		distance_variation("distance_variation", "Variação de Distância",
 				new String[] { "averageVelocity", "timeVariation" },
 				new String[] { "Velocidade Média", "Variação de Tempo" },
-				false, null),
+				false, null, null),
 		rent_divide("rent_divide", "Aluguel",
 				new String[] { "salary", "rentParts" },
 				new String[] { "Salário", "Aluguel" },
-				false, null),
+				false, null,
+				null),
 		kg_price("kg_price", "Preço por Quilograma",
 				new String[] { "totalPrice", "totalWeight" },
-				new String[] { "Preço Pago", "Peso" }, false, null),
+				new String[] { "Preço Pago", "Peso" }, false, null,
+				null),
 		complex_problem("complex_problem", "Problema Complexo",
 				null,
 				new String[] {}, true,
-				new Operation[] {});
+				new Operation[] {},
+				new String[] {});
 
 		private final String operation;
 		private final String operationPtbr;
@@ -55,18 +63,20 @@ public class Calculator {
 		private String[] variablesNamesPtbr;
 		private final boolean isComplex;
 		private Operation[] relatedOperations;
+		private String[] simplePanelNamesInput;
 
 		Operation(String operation, String operationPtbr,
 				String[] variables,
 				String[] variablesNamesPtbr,
 				boolean isComplex,
-				Operation[] relatedOperations) {
+				Operation[] relatedOperations, String[] simplePanelNamesInput) {
 			this.operation = operation;
 			this.operationPtbr = operationPtbr;
 			this.variables = variables;
 			this.variablesNamesPtbr = variablesNamesPtbr;
 			this.isComplex = isComplex;
 			this.relatedOperations = relatedOperations;
+			this.simplePanelNamesInput = simplePanelNamesInput;
 		}
 
 		public String getOperation() {
@@ -109,10 +119,19 @@ public class Calculator {
 
 		public void setRelatedOperations(Operation[] relatedOperations) {
 			if (!isComplex) {
-				throw new UnsupportedOperationException("Only complex operations can have related operations.");
+				throw new UnsupportedOperationException("Apenas operações complexas podem ter operações relacionadas.");
 			}
 
 			this.relatedOperations = relatedOperations;
+		}
+
+		public String[] getSimplePanelNamesInput() {
+			return simplePanelNamesInput;
+		}
+
+		public void setSimplePanelNamesInput(String[] simplePanelNamesInput) {
+
+			this.simplePanelNamesInput = simplePanelNamesInput;
 		}
 
 	}

@@ -41,7 +41,7 @@ public class ShowExemple {
           && "rent_divide".equals(selectedOp.getRelatedOperations()[i].getOperation()))
               ? selectedOp.getRelatedOperations()[i]
               : (numberOfPanel > 1 ? listedOperations[i] : selectedOp);
-      panels[i] = simplePanel(currentOp);
+      panels[i] = simplePanel(currentOp, selectedOp, i);
     }
 
     // Configuração do layout horizontal
@@ -174,20 +174,25 @@ public class ShowExemple {
     container.repaint();
   }
 
-  public JPanel simplePanel(Operation selectedOp) {
+  public JPanel simplePanel(Operation currentOp, Operation selectedOp, int index) {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.BLACK),
             BorderFactory.createEmptyBorder(2, 15, 15, 15)),
-        selectedOp.getOperationPtbr()));
+        currentOp.getOperationPtbr()));
 
     // Campos de entrada
-    JPanel inputPanel = new JPanel(new GridLayout(selectedOp.getVariables().length, 1, 5, 5));
-    JTextField[] inputFields = new JTextField[selectedOp.getVariables().length];
-    for (int i = 0; i < selectedOp.getVariables().length; i++) {
-      JLabel label = new JLabel(selectedOp.getVariablesNamesPtbr()[i] + ":");
+    JPanel inputPanel = new JPanel(new GridLayout(currentOp.getVariables().length, 1, 5, 5));
+    JTextField[] inputFields = new JTextField[currentOp.getVariables().length];
+    JLabel label = null;
+    for (int i = 0; i < currentOp.getVariables().length; i++) {
+      if (selectedOp.getSimplePanelNamesInput() != null && selectedOp.name() == "complex_problem") {
+        label = new JLabel(selectedOp.getSimplePanelNamesInput()[i + (index == 1 ? 2 : 0)] + ":");
+      } else {
+        label = new JLabel(currentOp.getVariablesNamesPtbr()[i] + ":");
+      }
       label.setFont(new Font("Arial", Font.PLAIN, 12));
       JTextField textField = new JTextField(8);
       inputFields[i] = textField;
@@ -220,7 +225,7 @@ public class ShowExemple {
           }
 
           // Chama o método de cálculo do Calculator
-          double result = Calculator.calculateFormula(selectedOp.getOperation(), values);
+          double result = Calculator.calculateFormula(currentOp.getOperation(), values);
           resultLabel.setText("Resultado: " + result);
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(panel, "Por favor, insira números válidos.", "Erro",
