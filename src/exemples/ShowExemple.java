@@ -1,6 +1,8 @@
 package exemples;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
 
 import exemples.Calculator.Operation;
 
@@ -187,14 +189,38 @@ public class ShowExemple {
     JPanel inputPanel = new JPanel(new GridLayout(currentOp.getVariables().length, 1, 5, 5));
     JTextField[] inputFields = new JTextField[currentOp.getVariables().length];
     JLabel label = null;
+
+    // DocumentFilter para permitir apenas números
+    DocumentFilter numericFilter = new DocumentFilter() {
+      @Override
+      public void insertString(FilterBypass fb, int offset, String string, javax.swing.text.AttributeSet attr)
+          throws javax.swing.text.BadLocationException {
+        if (string.matches("\\d*")) { // Permite apenas dígitos
+          super.insertString(fb, offset, string, attr);
+        }
+      }
+
+      @Override
+      public void replace(FilterBypass fb, int offset, int length, String text, javax.swing.text.AttributeSet attrs)
+          throws javax.swing.text.BadLocationException {
+        if (text.matches("\\d*")) { // Permite apenas dígitos
+          super.replace(fb, offset, length, text, attrs);
+        }
+      }
+    };
+
     for (int i = 0; i < currentOp.getVariables().length; i++) {
-      if (selectedOp.getSimplePanelNamesInput() != null && selectedOp.name() == "complex_problem") {
+      if (selectedOp.getSimplePanelNamesInput() != null && selectedOp.name().equals("complex_problem")) {
         label = new JLabel(selectedOp.getSimplePanelNamesInput()[i + (index == 1 ? 2 : 0)] + ":");
       } else {
         label = new JLabel(currentOp.getVariablesNamesPtbr()[i] + ":");
       }
       label.setFont(new Font("Arial", Font.PLAIN, 12));
       JTextField textField = new JTextField(8);
+
+      // Aplica o filtro numérico ao JTextField
+      ((AbstractDocument) textField.getDocument()).setDocumentFilter(numericFilter);
+
       inputFields[i] = textField;
       inputPanel.add(label);
       inputPanel.add(textField);
