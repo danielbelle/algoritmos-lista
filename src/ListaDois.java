@@ -8,7 +8,7 @@ public class ListaDois {
       System.out.print("Digite o número do exercício (1 a 31) ou 0 para sair: ");
       int exemple = scanner.nextInt();
 
-      if (exemple == 0) {
+      if (!scanner.hasNextInt() || exemple == 0) {
         System.out.println("Encerrando o programa.");
         break;
       }
@@ -19,12 +19,19 @@ public class ListaDois {
   }
 
   public static void selectedExemple(int exemple) {
-    // Lógica do exercício 1
-    System.out.println("Exercício " + exemple + ":");
-    try {
-      ListaDois.class.getMethod("exemple" + exemple, Scanner.class).invoke(null, new Scanner(System.in));
-    } catch (Exception e) {
-      System.out.println("Exercício não encontrado ou ocorreu um erro.");
+    Scanner scanner = new Scanner(System.in);
+    while (true) {
+      System.out.println("Exercício " + exemple + ":");
+      try {
+        ListaDois.class.getMethod("exemple" + exemple, Scanner.class).invoke(null, scanner);
+      } catch (Exception e) {
+        System.out.println("Exercício não encontrado ou ocorreu um erro.");
+      }
+      System.out.print("Digite 'sair' para voltar ao menu ou pressione Enter para repetir o exercício: ");
+      String input = scanner.nextLine();
+      if (input.equalsIgnoreCase("sair")) {
+        break;
+      }
     }
   }
 
@@ -271,5 +278,44 @@ public class ListaDois {
           + String.format("%,.2f", purchaseTotal + 15.00).replace('.', ',') + ".");
     }
 
+  }
+
+  public static void exemple19(Scanner scanner) {
+    int year = 0;
+
+    System.out.println("Digite o ano que deseja verificar se é bissexto:");
+    year = scanner.nextInt();
+
+    if (year < 0) {
+      System.out.println(
+          "Você digitou um ano negativo, mas vou considerar o valor absoluto, ou seja, partindo do princípio que o ano é de Antes da Era Comum.");
+      year = Math.abs(year);
+    }
+
+    int leapYear = year % 4;
+    if (leapYear == 0) {
+      System.out.println("O ano " + year + " é bissexto.");
+    } else {
+      System.out.println("O ano " + year + " não é bissexto.");
+    }
+  }
+
+  public static void exemple20(Scanner scanner) {
+    int year = 0;
+    int leapYear = 0;
+    System.out.println("Digite o ano que deseja verificar se é bissexto:");
+    year = scanner.nextInt();
+
+    if (year < 0) {
+      System.out.println(
+          "Você digitou um ano negativo, mas vou considerar o valor absoluto, ou seja, partindo do princípio que o ano é de Antes da Era Comum.");
+      year = Math.abs(year);
+    }
+
+    if ((year % 4 == 0) && (year % 400 == 0 || year % 100 != 0)) {
+      System.out.println("O ano " + year + " é bissexto.");
+    } else {
+      System.out.println("O ano " + year + " não é bissexto.");
+    }
   }
 }
