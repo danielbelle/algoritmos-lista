@@ -1,13 +1,14 @@
 import javax.swing.*;
 
+import engine.ShowExemple;
+import engine.Calculator.Operation;
+
 import java.awt.event.MouseEvent;
 
 import java.awt.*;
-import exemples.Calculator.Operation;
-import exemples.ShowExemple;
 import java.awt.event.MouseAdapter;
 
-public class App {
+public class DanielHenriqueBelle {
 
 	public static void main(String[] args) {
 		// Create the main frame
@@ -114,7 +115,8 @@ public class App {
 							selectedOp.setVariables(new String[] {
 									"Exemplo 8 - Metrô" });
 							selectedOp.setSimplePanelNamesInput(new String[] {
-									"Extensão Total", "Velocidade Média Padrão", "Extensão Total", "Velocidade Média Ajustada" });
+									"Extensão Total", "Velocidade Média Padrão", "Extensão Total",
+									"Velocidade Média Ajustada" });
 							break;
 
 						case "Exemplo 9 - Aeronave":
