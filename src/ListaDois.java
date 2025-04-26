@@ -8,7 +8,7 @@ public class ListaDois {
       System.out.print("Digite o número do exercício (1 a 31) ou 0 para sair: ");
       int exemple = scanner.nextInt();
 
-      if (!scanner.hasNextInt() || exemple == 0) {
+      if (exemple == 0) {
         System.out.println("Encerrando o programa.");
         break;
       }
@@ -318,4 +318,199 @@ public class ListaDois {
       System.out.println("O ano " + year + " não é bissexto.");
     }
   }
+
+  public static void exemple21(Scanner scanner) {
+    int experimentSeconds = 0;
+
+    System.out.println("Digite o tempo em segundos:");
+    experimentSeconds = scanner.nextInt();
+
+    if (experimentSeconds < 0) {
+      System.out.println("Você digitou um valor negativo, mas vou considerar o valor absoluto.");
+      experimentSeconds = Math.abs(experimentSeconds);
+    }
+    System.out.println("O formato do tempo é: dias-horas:minutos:segundos");
+    System.out.println(String.format("%02d-%02d:%02d:%02d", experimentSeconds / (3600 * 24), experimentSeconds / 3600,
+        (experimentSeconds % 3600) / 60,
+        experimentSeconds % 60));
+
+  }
+
+  public static void exemple22(Scanner scanner) {
+    int valA = 0;
+    int valB = 0;
+    int valC = 0;
+    int valD = 0;
+
+    System.out.println("Digite quatro valores inteiros:");
+    System.out.println("Valor A:");
+    valA = scanner.nextInt();
+    System.out.println("Valor B:");
+    valB = scanner.nextInt();
+    System.out.println("Valor C:");
+    valC = scanner.nextInt();
+    System.out.println("Valor D:");
+    valD = scanner.nextInt();
+
+    if (valB > valC) {
+      if (valD > valA) {
+        if (valC + valD > valA + valB) {
+          if (valC > 0 && valD > 0) {
+            if (valA % 2 == 0) {
+              System.out.println("Valor válido");
+            } else {
+              System.out.println("O valor A é ímpar.");
+              System.out.println("Valor inválido");
+            }
+          } else {
+            System.out.println("O valor C ou D é menor ou igual a zero.");
+            System.out.println("Valor inválido");
+          }
+        } else {
+          System.out.println("A soma de C e D é menor ou igual a soma de A e B.");
+          System.out.println("Valor inválido");
+        }
+      } else {
+        System.out.println("O valor D é menor ou igual a A.");
+        System.out.println("Valor inválido");
+      }
+    } else {
+      System.out.println("O valor B é menor ou igual a C.");
+      System.out.println("Valor inválido");
+    }
+
+  }
+
+  public static void exemple23(Scanner scanner) {
+    int meninos = 0;
+    int meninas = 0;
+
+    System.out.println("Digite o número de meninos:");
+    meninos = scanner.nextInt();
+    System.out.println("Digite o número de meninas:");
+    meninas = scanner.nextInt();
+
+    if (meninas < 0 || meninos < 0) {
+      System.out.println("O número de meninos e meninas nao pode ser negativo.");
+      return;
+    }
+    int totalEscoteiros = meninas + meninos;
+
+    int quantidadeChefes = (int) Math.ceil(totalEscoteiros / 6.0) + 1;
+
+    System.out.println(quantidadeChefes);
+
+    if (meninas > 0 && meninos > 0) {
+      System.out.println("Meninas: " + meninas + ", Meninos: " + meninos + ", Total de escoteiros: " + totalEscoteiros
+          + ", Total de chefes: " + quantidadeChefes);
+    } else if (meninas > 0 && meninos == 0) {
+      System.out.println("Meninas: " + meninas + ", Meninos: " + meninos + ", Total de escoteiros: " + totalEscoteiros
+          + ", Total de chefes: " + quantidadeChefes);
+    } else {
+      System.out.println("Meninas: " + meninas + ", Meninos: " + meninos + ", Total de escoteiros: " + totalEscoteiros
+          + ", Total de chefes: " + quantidadeChefes);
+    }
+
+  }
+
+  public static void exemple24(Scanner scanner) {
+    double valA = 0;
+    double valB = 0;
+    double valC = 0;
+
+    System.out.println("Digite os valores de");
+    System.out.println("A:");
+    valA = scanner.nextInt();
+    System.out.println("B:");
+    valB = scanner.nextInt();
+    System.out.println("C:");
+    valC = scanner.nextInt();
+
+    if (valA == 0) {
+      System.out.println("Não é uma euqação de segundo grau.");
+      return;
+    }
+    if (valB == 0 || valC == 0) {
+      System.out.println("Equação incompleta.");
+      return;
+    } else {
+      System.out.println("Equação é: " + valA + "x² + " + valB + "x + " + valC + " = 0 .");
+    }
+    double delta = Math.pow(valB, 2) - (4 * valA * valC);
+    System.out.println("O valor de delta é: " + delta);
+
+    if (delta < 0) {
+      System.out.println("A equação não possui raízes reais.");
+      return;
+    } else if (delta == 0) {
+      System.out.println("A equação possui uma raiz real, que é: " + (-valB / (2 * valA)));
+    } else {
+      System.out.println("A equação possui duas raízes reais, que são: ");
+      System.out.println("x'1 = " + String.format("%.2f", (-valB + Math.sqrt(delta)) / (2 * valA)));
+      System.out.println("x'2 = " + String.format("%.2f", (-valB - Math.sqrt(delta)) / (2 * valA)));
+    }
+  }
+
+  public static void exempleProva4(Scanner scanner) {
+    double largura = 0;
+
+    System.out.println("Digite a largura em cm do aquário:");
+    largura = scanner.nextInt();
+
+    if (largura <= 0) {
+      System.out.println("A largura deve ser maior que zero.");
+      return;
+    }
+
+    double areaSuperficial = 4 * Math.PI * Math.pow((largura / 2), 2);
+    double volume = (4.0 / 3.0) * Math.PI * Math.pow((largura / 2), 3);
+    System.out.println("A área superficial do aquário é: " + String.format("%.2f", areaSuperficial) + "cm².");
+    System.out.println("O volume do aquário é: " + String.format("%.2f", volume * 0.001) + "L.");
+  }
+
+  public static void exempleProva3(Scanner scanner) {
+
+    int codigo = 0;
+    double temperatura = 0;
+    String produto = "";
+
+    System.out.println("1 - clorofórmio");
+    System.out.println("2 - propano");
+    System.out.println("3 - éter etílico");
+    System.out.println("Digite o código numérico do produto: ");
+
+    codigo = scanner.nextInt();
+
+    System.out.println("Digite a temperatura em graus Celsius: ");
+    temperatura = scanner.nextInt();
+
+    switch (codigo) {
+      case 1:
+        produto = "clorofórmio";
+        verificaEstado(temperatura, produto, -63.5, 61.2);
+        break;
+      case 2:
+        produto = "propano";
+        verificaEstado(temperatura, produto, -190, -45);
+        break;
+      case 3:
+        produto = "éter etílico";
+        verificaEstado(temperatura, produto, -116, 35);
+        break;
+      default:
+        System.out.println("Código inválido. O código deve ser entre 1 e 3.");
+        break;
+    }
+  }
+
+  private static void verificaEstado(double temperatura, String produto, double pontoDeFusao, double pontoDeEbulicao) {
+    if (temperatura < pontoDeFusao) {
+      System.out.println("O " + produto + " está no estado sólido.");
+    } else if (temperatura >= pontoDeEbulicao) {
+      System.out.println("O " + produto + " está no estado gasoso.");
+    } else {
+      System.out.println("O " + produto + " está no estado líquido.");
+    }
+  }
+
 }
