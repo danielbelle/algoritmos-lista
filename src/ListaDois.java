@@ -566,109 +566,86 @@ public class ListaDois {
   }
 
   public static void exemple29(Scanner scanner) {
-    System.out.println("Exercício 25: Não implementado.");
+    System.out.println("Irei descobrir seu animal:");
+    System.out.println("Ele é ave ou mamífero? (a/m)");
+    String animalType = scanner.next().toLowerCase();
+    System.out.println("Ele é carnívoro ou onívoro? (c/o)");
+    String animalDiet = scanner.next().toLowerCase();
+    switch (animalType) {
+      case "a":
+        if (animalDiet.equals("c")) {
+          System.out.println("Águia");
+        } else {
+          System.out.println("Ave não encontrada.");
+        }
+        break;
+      case "m":
+        if (animalDiet.equals("c")) {
+          System.out.println("Onça");
+
+        } else {
+          System.out.println("Mamífero não encontrado.");
+
+        }
+
+      default:
+        break;
+    }
+
   }
 
   public static void exemple30(Scanner scanner) {
-    System.out.println("Exercício 25: Não implementado.");
+    System.out.println("Entre com a nota do Trabalho de Laboratório");
+    double lab = Double.parseDouble(scanner.next().replace(",", "."));
+    System.out.println("Entre com a nota da Avaliação Semestral");
+    double semiannual = Double.parseDouble(scanner.next().replace(",", "."));
+    System.out.println("Entre com a nota do Exame Final");
+    double finals = Double.parseDouble(scanner.next().replace(",", "."));
+    if (lab < 0 || semiannual < 0 || finals < 0) {
+      System.out.println("As notas não podem ser menores que zero.");
+      return;
+    }
+    double average = (lab * 2 + semiannual * 3 + finals * 5) / 10;
+
+    String grade;
+    if (9.0 <= average && average <= 10) {
+      grade = "A";
+    } else if (7.5 <= average && average <= 8.9) {
+      grade = "B";
+    } else if (5.0 <= average && average <= 7.4) {
+      grade = "C";
+    } else if (3.0 <= average && average <= 4.9) {
+      grade = "D";
+    } else {
+      grade = "E";
+    }
+    System.out.println("Sua nota: " + grade);
   }
 
   public static void exemple31(Scanner scanner) {
-    System.out.println("Exercício 25: Não implementado.");
-  }
+    System.out.println("Entre com o seu salario:");
+    String paymentInput = scanner.next().replace(",", ".");
+    double oldPayment;
+    double newPayment;
 
-  public static void exempleProva4(Scanner scanner) {
-    double largura = 0;
-
-    System.out.println("Digite a largura em cm do aquário:");
-    largura = scanner.nextInt();
-
-    if (largura <= 0) {
-      System.out.println("A largura deve ser maior que zero.");
+    try {
+      oldPayment = Double.parseDouble(paymentInput);
+    } catch (NumberFormatException e) {
+      System.out.println("Valor inválido. Por favor, insira um número válido.");
       return;
     }
-
-    double areaSuperficial = 4 * Math.PI * Math.pow((largura / 2), 2);
-    double volume = (4.0 / 3.0) * Math.PI * Math.pow((largura / 2), 3);
-    System.out.println("A área superficial do aquário é: " + String.format("%.2f", areaSuperficial) + "cm².");
-    System.out.println("O volume do aquário é: " + String.format("%.2f", volume * 0.001) + "L.");
-  }
-
-  public static void exempleProva2(Scanner scanner) {
-    int meninos = 0;
-    int meninas = 0;
-
-    System.out.println("Digite o número de meninos:");
-    meninos = scanner.nextInt();
-    System.out.println("Digite o número de meninas:");
-    meninas = scanner.nextInt();
-
-    if (meninas < 0 || meninos < 0) {
-      System.out.println("O número de meninos e meninas nao pode ser negativo.");
+    if (oldPayment < 0) {
+      System.out.println("O valor do salário não pode ser menor que zero.");
       return;
     }
-    int totalEscoteiros = meninas + meninos;
-
-    int quantidadeChefes = (int) Math.ceil(totalEscoteiros / 6.0) + 1;
-
-    System.out.println(quantidadeChefes);
-
-    if (meninas > 0 && meninos > 0) {
-      System.out.println("Meninas: " + meninas + ", Meninos: " + meninos + ", Total de escoteiros: " + totalEscoteiros
-          + ", Total de chefes: " + quantidadeChefes);
-    } else if (meninas > 0 && meninos == 0) {
-      System.out.println("Meninas: " + meninas + ", Meninos: " + meninos + ", Total de escoteiros: " + totalEscoteiros
-          + ", Total de chefes: " + quantidadeChefes);
+    if (oldPayment > 1200.00) {
+      newPayment = oldPayment;
+    } else if (oldPayment <= 500) {
+      newPayment = oldPayment * 1.12;
     } else {
-      System.out.println("Meninas: " + meninas + ", Meninos: " + meninos + ", Total de escoteiros: " + totalEscoteiros
-          + ", Total de chefes: " + quantidadeChefes);
+      newPayment = oldPayment * 1.05;
     }
-
-  }
-
-  public static void exempleProva3(Scanner scanner) {
-
-    int codigo = 0;
-    double temperatura = 0;
-    String produto = "";
-
-    System.out.println("1 - clorofórmio");
-    System.out.println("2 - propano");
-    System.out.println("3 - éter etílico");
-    System.out.println("Digite o código numérico do produto: ");
-
-    codigo = scanner.nextInt();
-
-    System.out.println("Digite a temperatura em graus Celsius: ");
-    temperatura = scanner.nextInt();
-
-    switch (codigo) {
-      case 1:
-        produto = "clorofórmio";
-        verificaEstado(temperatura, produto, -63.5, 61.2);
-        break;
-      case 2:
-        produto = "propano";
-        verificaEstado(temperatura, produto, -190, -45);
-        break;
-      case 3:
-        produto = "éter etílico";
-        verificaEstado(temperatura, produto, -116, 35);
-        break;
-      default:
-        System.out.println("Código inválido. O código deve ser entre 1 e 3.");
-        break;
-    }
-  }
-
-  private static void verificaEstado(double temperatura, String produto, double pontoDeFusao, double pontoDeEbulicao) {
-    if (temperatura < pontoDeFusao) {
-      System.out.println("O " + produto + " está no estado sólido.");
-    } else if (temperatura >= pontoDeEbulicao) {
-      System.out.println("O " + produto + " está no estado gasoso.");
-    } else {
-      System.out.println("O " + produto + " está no estado líquido.");
-    }
+    System.out.println("O novo salário é: R$" + String.format("%,.2f", newPayment).replace('.', ',') + ".");
   }
 
 }
