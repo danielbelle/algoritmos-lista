@@ -302,7 +302,6 @@ public class ListaDois {
 
   public static void exemple20(Scanner scanner) {
     int year = 0;
-    int leapYear = 0;
     System.out.println("Digite o ano que deseja verificar se é bissexto:");
     year = scanner.nextInt();
 
@@ -382,6 +381,220 @@ public class ListaDois {
   }
 
   public static void exemple23(Scanner scanner) {
+    double valA = 0;
+    double valB = 0;
+    double valC = 0;
+
+    System.out.println("Digite os valores de");
+    System.out.println("A:");
+    valA = scanner.nextInt();
+    System.out.println("B:");
+    valB = scanner.nextInt();
+    System.out.println("C:");
+    valC = scanner.nextInt();
+
+    if (valA == 0) {
+      System.out.println("Não é uma equação de segundo grau.");
+      return;
+    }
+    if (valB == 0 || valC == 0) {
+      System.out.println("Equação incompleta.");
+      return;
+    } else {
+      System.out.println("Equação é: " + valA + "x² + " + valB + "x + " + valC + " = 0 .");
+    }
+    double delta = Math.pow(valB, 2) - (4 * valA * valC);
+    System.out.println("O valor de delta é: " + delta);
+
+    if (delta < 0) {
+      System.out.println("A equação não possui raízes reais.");
+      return;
+    } else if (delta == 0) {
+      System.out.println("A equação possui uma raiz real, que é: " + (-valB / (2 * valA)));
+    } else {
+      System.out.println("A equação possui duas raízes reais, que são: ");
+      System.out.println("x'1 = " + String.format("%.2f", (-valB + Math.sqrt(delta)) / (2 * valA)));
+      System.out.println("x'2 = " + String.format("%.2f", (-valB - Math.sqrt(delta)) / (2 * valA)));
+    }
+  }
+
+  public static void exemple24(Scanner scanner) {
+
+    double realValue = 0;
+    System.out.println("Digite um valor real, que iremos dizer se pertence aos intervalos:");
+    realValue = scanner.nextInt();
+
+    if (0 <= realValue && realValue <= 25) {
+      System.out.println("O valor " + realValue + " pertence ao intervalo [0, 25].");
+    } else if (25 < realValue && realValue <= 50) {
+      System.out.println("O valor " + realValue + " pertence ao intervalo (25, 50].");
+
+    } else if (50 < realValue && realValue <= 75) {
+      System.out.println("O valor " + realValue + " pertence ao intervalo (50, 75].");
+    } else if (75 < realValue && realValue <= 100) {
+      System.out.println("O valor " + realValue + " pertence ao intervalo (75, 100].");
+    } else {
+      System.out.println("O valor " + realValue + " está fora do intervalo.");
+    }
+  }
+
+  public static void exemple25(Scanner scanner) {
+
+    double xAxis = 0;
+    double yAxis = 0;
+
+    System.out.println("Digite a localização do ponto no eixo X:");
+    xAxis = scanner.nextInt();
+    System.out.println("Digite a localização do ponto no eixo Y:");
+    yAxis = scanner.nextInt();
+
+    if (xAxis == 0 && yAxis == 0) {
+      System.out.println("O ponto está na origem.");
+    } else if (xAxis == 0) {
+      System.out.println("O ponto está no eixo Y.");
+    } else if (yAxis == 0) {
+      System.out.println("O ponto está no eixo X.");
+    } else if (xAxis < 0) {
+      if (yAxis < 0) {
+        System.out.println("O ponto está no terceiro quadrante.");
+      } else {
+        System.out.println("O ponto está no segundo quadrante.");
+      }
+    } else {
+      if (yAxis < 0) {
+        System.out.println("O ponto está no quarto quadrante.");
+      } else {
+        System.out.println("O ponto está no primeiro quadrante.");
+      }
+    }
+
+  }
+
+  public static void exemple26(Scanner scanner) {
+    System.out.println("Insira 3 valores inteiros:");
+    System.out.println("Valor A:");
+    int valA = scanner.nextInt();
+    System.out.println("Valor B:");
+    int valB = scanner.nextInt();
+    System.out.println("Valor C:");
+    int valC = scanner.nextInt();
+
+    int[] values = { valA, valB, valC };
+
+    for (int i = 0; i < values.length; i++) {
+      int index = i;
+      for (int j = i + 1; j < values.length; j++) {
+        if (values[j] < values[index]) {
+          index = j;
+        }
+      }
+      int menorNumero = values[index];
+      values[index] = values[i];
+      values[i] = menorNumero;
+    }
+    System.out.println("Os números em ordem crescente são: " + values[0] + ", " + values[1] + ", " + values[2] + ".");
+    System.out.println("Os número imputados foram: " + valA + ", " + valB + ", " + valC + ".");
+
+  }
+
+  public static void exemple27(Scanner scanner) {
+    System.out.println("Insira 3 medidas de lados:");
+    System.out.println("Valor A:");
+    int sideA = scanner.nextInt();
+    System.out.println("Valor B:");
+    int sideB = scanner.nextInt();
+    System.out.println("Valor C:");
+    int sideC = scanner.nextInt();
+
+    int[] values = { sideA, sideB, sideC };
+
+    for (int i = 0; i < values.length; i++) {
+      int index = i;
+      for (int j = i + 1; j < values.length; j++) {
+        if (values[j] < values[index]) {
+          index = j;
+        }
+      }
+      int menorNumero = values[index];
+      values[index] = values[i];
+      values[i] = menorNumero;
+    }
+    for (int i = 0; i < values.length / 2; i++) {
+      int temp = values[i];
+      values[i] = values[values.length - 1 - i];
+      values[values.length - 1 - i] = temp;
+    }
+
+    if (values[0] < values[1] + values[2]) {
+      if (Math.pow(values[0], 2) < Math.pow(values[1], 2) + Math.pow(values[2], 2)) {
+        System.out.println("Os lados formam um triângulo acutângulo.");
+      } else if (Math.pow(values[0], 2) > Math.pow(values[1], 2) + Math.pow(values[2], 2)) {
+        System.out.println("Os lados formam um triângulo obtusângulo.");
+      } else {
+        System.out.println("Os lados formam um triângulo retângulo.");
+      }
+    } else {
+      System.out.println("Os lados não formam um triângulo.");
+      return;
+    }
+
+    System.out.println("Os números em ordem decrescente são: " + values[0] + ", " + values[1] + ", " + values[2] + ".");
+    System.out.println("Os número imputados foram: " + sideA + ", " + sideB + ", " + sideC + ".");
+
+  }
+
+  public static void exemple28(Scanner scanner) {
+    System.out.println("Digite um número inteiro qualquer:");
+    int number = scanner.nextInt();
+    String signal = "positivo";
+    String evenOrOdd = "par";
+
+    if (number == 0) {
+      System.out.println("O número é zero.");
+
+    } else {
+      if (number < 0) {
+        signal = "negativo";
+      }
+      if (number % 2 != 0) {
+        evenOrOdd = "ímpar";
+      }
+
+      System.out.println("O número é" + signal + " . Ele é " + evenOrOdd + ".");
+    }
+
+  }
+
+  public static void exemple29(Scanner scanner) {
+    System.out.println("Exercício 25: Não implementado.");
+  }
+
+  public static void exemple30(Scanner scanner) {
+    System.out.println("Exercício 25: Não implementado.");
+  }
+
+  public static void exemple31(Scanner scanner) {
+    System.out.println("Exercício 25: Não implementado.");
+  }
+
+  public static void exempleProva4(Scanner scanner) {
+    double largura = 0;
+
+    System.out.println("Digite a largura em cm do aquário:");
+    largura = scanner.nextInt();
+
+    if (largura <= 0) {
+      System.out.println("A largura deve ser maior que zero.");
+      return;
+    }
+
+    double areaSuperficial = 4 * Math.PI * Math.pow((largura / 2), 2);
+    double volume = (4.0 / 3.0) * Math.PI * Math.pow((largura / 2), 3);
+    System.out.println("A área superficial do aquário é: " + String.format("%.2f", areaSuperficial) + "cm².");
+    System.out.println("O volume do aquário é: " + String.format("%.2f", volume * 0.001) + "L.");
+  }
+
+  public static void exempleProva2(Scanner scanner) {
     int meninos = 0;
     int meninas = 0;
 
@@ -411,61 +624,6 @@ public class ListaDois {
           + ", Total de chefes: " + quantidadeChefes);
     }
 
-  }
-
-  public static void exemple24(Scanner scanner) {
-    double valA = 0;
-    double valB = 0;
-    double valC = 0;
-
-    System.out.println("Digite os valores de");
-    System.out.println("A:");
-    valA = scanner.nextInt();
-    System.out.println("B:");
-    valB = scanner.nextInt();
-    System.out.println("C:");
-    valC = scanner.nextInt();
-
-    if (valA == 0) {
-      System.out.println("Não é uma euqação de segundo grau.");
-      return;
-    }
-    if (valB == 0 || valC == 0) {
-      System.out.println("Equação incompleta.");
-      return;
-    } else {
-      System.out.println("Equação é: " + valA + "x² + " + valB + "x + " + valC + " = 0 .");
-    }
-    double delta = Math.pow(valB, 2) - (4 * valA * valC);
-    System.out.println("O valor de delta é: " + delta);
-
-    if (delta < 0) {
-      System.out.println("A equação não possui raízes reais.");
-      return;
-    } else if (delta == 0) {
-      System.out.println("A equação possui uma raiz real, que é: " + (-valB / (2 * valA)));
-    } else {
-      System.out.println("A equação possui duas raízes reais, que são: ");
-      System.out.println("x'1 = " + String.format("%.2f", (-valB + Math.sqrt(delta)) / (2 * valA)));
-      System.out.println("x'2 = " + String.format("%.2f", (-valB - Math.sqrt(delta)) / (2 * valA)));
-    }
-  }
-
-  public static void exempleProva4(Scanner scanner) {
-    double largura = 0;
-
-    System.out.println("Digite a largura em cm do aquário:");
-    largura = scanner.nextInt();
-
-    if (largura <= 0) {
-      System.out.println("A largura deve ser maior que zero.");
-      return;
-    }
-
-    double areaSuperficial = 4 * Math.PI * Math.pow((largura / 2), 2);
-    double volume = (4.0 / 3.0) * Math.PI * Math.pow((largura / 2), 3);
-    System.out.println("A área superficial do aquário é: " + String.format("%.2f", areaSuperficial) + "cm².");
-    System.out.println("O volume do aquário é: " + String.format("%.2f", volume * 0.001) + "L.");
   }
 
   public static void exempleProva3(Scanner scanner) {
