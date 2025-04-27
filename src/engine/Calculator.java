@@ -1,8 +1,6 @@
 package engine;
 
 import javax.swing.JLabel;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class Calculator {
 	private static String choice;

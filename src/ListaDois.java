@@ -5,7 +5,7 @@ public class ListaDois {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
     while (true) {
-      System.out.print("Digite o número do exercício (1 a 31) ou 0 para sair: ");
+      System.out.print("Digite o número do exercício (12 a 31) ou 0 para sair: ");
       int exemple = scanner.nextInt();
 
       if (exemple == 0) {
