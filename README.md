@@ -1,23 +1,26 @@
 ## 📚 Projeto: Exercícios de Algoritmos
 
-Este projeto implementa soluções para 11 questões de algoritmos utilizando Java.
-A interface gráfica foi desenvolvida com `Swing`, permitindo a seleção e
-execução de exemplos diretamente no aplicativo.
+Este projeto implementa soluções para as listas 1 e 2 de algoritmos do curso de
+Análise e Desenvolvimento de Sistemas (ADS) do IFRS - Erechim. A **Lista 1**
+utiliza uma interface gráfica desenvolvida com `Swing`, enquanto a **Lista 2** é
+resolvida apenas com inputs e outputs via prompt.
 
 ---
 
 ### 📋 Estrutura do Projeto
 
-- **`DanielHenriqueBelle.java`**: Arquivo principal que inicializa a interface
-  gráfica e gerencia a seleção dos exemplos.
+- **`ListaUm.java`**: Arquivo principal que inicializa a interface gráfica e
+  gerencia a seleção dos exemplos da Lista 1.
 - **`ShowExemple.java`**: Responsável por renderizar os painéis dinâmicos para
-  entrada de dados e exibição de resultados.
-- **`Calculator.java`**: Contém a lógica de cálculo para cada exemplo, incluindo
-  operações simples e complexas.
+  entrada de dados e exibição de resultados na Lista 1.
+- **`Calculator.java`**: Contém a lógica de cálculo para cada exemplo da Lista
+  1, incluindo operações simples e complexas.
+- **`ListaDois.java`**: Arquivo principal que contém a resolução dos exercícios
+  da Lista 2, utilizando inputs e outputs via prompt.
 
 ---
 
-### 🧮 Exemplos Implementados
+### 🧮 Exemplos Implementados - Lista 1
 
 #### **Exemplo 1 - Média Aritmética Simples**
 
@@ -101,135 +104,124 @@ execução de exemplos diretamente no aplicativo.
 
 ---
 
+### 🧮 Exemplos Implementados - Lista 2
+
+A Lista 2 contém exercícios resolvidos utilizando apenas inputs e outputs via
+prompt. Aqui estão os exemplos implementados:
+
+#### **Exemplo 12 - Comprimento da Tirolesa**
+
+- **Descrição**: Calcula o comprimento de uma tirolesa entre dois prédios com
+  base em suas alturas e a distância entre eles.
+
+#### **Exemplo 13 - Largura do Rio**
+
+- **Descrição**: Calcula a largura de um rio com base na trajetória linear de um
+  barqueiro e a distância relativa entre dois píeres.
+
+#### **Exemplo 14 - Altura de um Prédio**
+
+- **Descrição**: Calcula a altura de um prédio com base na distância até ele e
+  no ângulo de elevação.
+
+#### **Exemplo 15 - Quantidade de Tinta**
+
+- **Descrição**: Calcula a quantidade de latas de tinta necessárias para pintar
+  uma área e o custo total.
+
+#### **Exemplo 16 - Corrente de Ajuda**
+
+- **Descrição**: Simula uma corrente de ajuda, calculando o número de pessoas
+  atingidas após 10 dias.
+
+#### **Exemplo 17 - Certificado de Participação**
+
+- **Descrição**: Verifica se o participante de um congresso pode receber o
+  certificado com base no percentual de horas assistidas.
+
+#### **Exemplo 18 - Frete Grátis**
+
+- **Descrição**: Calcula se o frete é grátis ou não com base no valor total da
+  compra.
+
+#### **Exemplo 19 - Ano Bissexto (Simples)**
+
+- **Descrição**: Verifica se um ano é bissexto com base na divisão por 4.
+
+#### **Exemplo 20 - Ano Bissexto (Completo)**
+
+- **Descrição**: Verifica se um ano é bissexto considerando as regras completas
+  (divisível por 4, mas não por 100, exceto se for divisível por 400).
+
+#### **Exemplo 21 - Conversão de Segundos**
+
+- **Descrição**: Converte um valor em segundos para o formato
+  `dias-horas:minutos:segundos`.
+
+#### **Exemplo 22 - Validação de Valores**
+
+- **Descrição**: Valida quatro valores inteiros com base em condições
+  específicas.
+
+#### **Exemplo 23 - Equação do Segundo Grau**
+
+- **Descrição**: Resolve uma equação do segundo grau, calculando o delta e as
+  raízes reais (se existirem).
+
+#### **Exemplo 24 - Intervalos Numéricos**
+
+- **Descrição**: Verifica se um número real pertence a intervalos específicos.
+
+#### **Exemplo 25 - Localização de um Ponto**
+
+- **Descrição**: Determina a localização de um ponto no plano cartesiano
+  (origem, eixos ou quadrantes).
+
+#### **Exemplo 26 - Ordenação de Três Números**
+
+- **Descrição**: Ordena três números inteiros em ordem crescente.
+
+#### **Exemplo 27 - Tipos de Triângulos**
+
+- **Descrição**: Determina o tipo de triângulo (acutângulo, retângulo,
+  obtusângulo) com base nos lados fornecidos.
+
+#### **Exemplo 28 - Par ou Ímpar**
+
+- **Descrição**: Verifica se um número é par ou ímpar, positivo ou negativo.
+
+#### **Exemplo 29 - Descobrir o Animal**
+
+- **Descrição**: Determina o animal com base em características fornecidas (tipo
+  e dieta).
+
+#### **Exemplo 30 - Média Ponderada**
+
+- **Descrição**: Calcula a média ponderada de três notas (trabalho de
+  laboratório, avaliação semestral e exame final) e determina o conceito final.
+
+#### **Exemplo 31 - Reajuste Salarial**
+
+- **Descrição**: Calcula o novo salário com base em faixas de reajuste.
+
+---
+
 ### 🖥️ Como Executar
+
+#### Lista 1
 
 1. Clone o repositório:
    ```bash
    git clone https://github.com/seu-usuario/algoritmos-lista.git
    ```
 2. Abra o projeto no Visual Studio Code ou em sua IDE preferida.
-3. Compile e execute o arquivo DanielHenriqueBelle.java.
+3. Compile e execute o arquivo ListaUm.java.
 
----
+#### Lista 2
 
-### Alterações Realizadas
-
-1. Atualizei o nome do arquivo principal para
-   [DanielHenriqueBelle.java](http://_vscodecontentref_/1).
-2. Ajustei os nomes das variáveis e descrições para refletir as alterações
-   realizadas no código.
-
----
-
-### 🌐 English Version
-
-## 📚 Project: Algorithm Exercises
-
-This project implements solutions for 11 algorithm problems using Java. The
-graphical interface was developed with `Swing`, allowing users to select and
-execute examples directly in the application.
-
----
-
-### 📋 Project Structure
-
-- **`DanielHenriqueBelle.java`**: Main file that initializes the graphical
-  interface and manages example selection.
-- **`ShowExemple.java`**: Responsible for rendering dynamic panels for data
-  input and result display.
-- **`Calculator.java`**: Contains the calculation logic for each example,
-  including simple and complex operations.
-
----
-
-### 🧮 Implemented Examples
-
-#### **Example 1 - Simple Arithmetic Mean**
-
-- **Description**: Calculates the simple arithmetic mean between two integers.
-- **Formula**: `(value1 + value2) / 2`
-
-#### **Example 2 - Weighted Arithmetic Mean**
-
-- **Description**: Calculates the weighted mean between two numbers, with
-  weights 2.5 and 3.5.
-- **Formula**: `(value1 * weight1 + value2 * weight2) / (weight1 + weight2)`
-
-#### **Example 3 - Final Salary**
-
-- **Description**: Calculates the final salary of a salesperson, considering a
-  15% commission on total sales.
-- **Formula**: `FinalSalary = BaseSalary + (TotalSales * 15%)`
-
-#### **Example 4 - Average Speed**
-
-- **Description**: Calculates the average speed of a trip in km/h.
-- **Formula**: `(Distance * 60) / TimeInMinutes`
-
-#### **Example 5 - Time Variation**
-
-- **Description**: Calculates the time required to cover a distance at a given
-  average speed.
-- **Formula**: `Time = Distance / AverageSpeed`
-
-#### **Example 6 - Distance Variation**
-
-- **Description**: Calculates the distance covered based on speed and time.
-- **Formula**: `Distance = Speed * Time`
-
-#### **Example 7 - Bus Driver**
-
-- **Description**: Calculates trip information for a bus driver, including
-  remaining time and distance covered.
-- **Formulas**:
-  - `TotalTime = TotalDistance / AverageSpeed`
-  - `DistanceCovered = AverageSpeed * Interval`
-  - `RemainingDistance = TotalDistance - DistanceCovered`
-  - `RemainingTime = RemainingDistance / AverageSpeed`
-
-#### **Example 8 - Subway**
-
-- **Description**: Calculates trip information for a subway, considering
-  standard and adjusted speeds.
-- **Formulas**:
-  - `StandardTime = TotalExtension / StandardSpeed`
-  - `AdjustedTime = TotalExtension / AdjustedSpeed`
-  - `TimeDifference = StandardTime - AdjustedTime`
-  - `PossibleDistance = AdjustedSpeed * StandardTime`
-  - `DistanceDifference = TotalExtension - PossibleDistance`
-
-#### **Example 9 - Aircraft**
-
-- **Description**: Calculates trip information for an aircraft, considering
-  autopilot and cruise modes.
-- **Formulas**:
-  - `TotalTime = Extension / CruiseSpeed`
-  - `AutopilotDistance = AutomaticSpeed * Interval`
-  - `RemainingDistance = Extension - AutopilotDistance`
-  - `RemainingTime = TotalTime - Interval`
-  - `RequiredSpeed = RemainingDistance / RemainingTime`
-  - `AutomaticTime = Extension / AutomaticSpeed`
-
-#### **Example 10 - Rent**
-
-- **Description**: Calculates the rent amount and the percentage of the salary
-  used.
-- **Formulas**:
-  - `RentValue = (Salary / 11) * Parts`
-  - `Percentage = (RentValue / Salary) * 100`
-
-#### **Example 11 - Price per kg**
-
-- **Description**: Calculates the price per kilogram of meat.
-- **Formula**: `PricePerKg = TotalValue / Quantity`
-
----
-
-### 🖥️ How to Run
-
-1. Clone the repository:
+1. Clone o repositório:
    ```bash
-   git clone https://github.com/your-username/algorithms-list.git
+   git clone https://github.com/seu-usuario/algoritmos-lista.git
    ```
-2. Open the project in Visual Studio Code or your preferred IDE.
-3. Compile and run the DanielHenriqueBelle.java file.
+2. Abra o projeto no Visual Studio Code ou em sua IDE preferida.
+3. Compile e execute o arquivo ListaDois.java.

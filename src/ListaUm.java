@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 
-public class DanielHenriqueBelle {
+public class ListaUm {
 
 	public static void main(String[] args) {
 		// Create the main frame
